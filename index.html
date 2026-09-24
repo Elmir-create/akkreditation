@@ -117,6 +117,17 @@
   .vec { position: relative; display: inline-block; padding-top: .2em; }
   .vec::before { content: '→'; position: absolute; left: 0; right: 0; top: -.5em; text-align: center; font-size: .7em; line-height: 1; }
   sub, sup { line-height: 0; }
+  .rad { display: inline-flex; align-items: stretch; vertical-align: middle; }
+  .rad-sign { font-size: 1.15em; line-height: 1; align-self: center; }
+  .rad-body { border-top: 1.5px solid currentColor; padding: 0 .12em; margin-top: .12em; }
+  .rad-idx { font-size: .6em; align-self: flex-start; margin-right: -.25em; }
+  .intg { display: inline-flex; align-items: center; vertical-align: middle; margin: 0 .1em; }
+  .intg-sign { font-size: 1.7em; line-height: 1; font-weight: 300; }
+  .intg-lims { display: inline-flex; flex-direction: column; justify-content: space-between; align-self: stretch; font-size: .72em; line-height: 1.1; margin-left: .05em; }
+  .undov { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1.15; margin: 0 .15em; }
+  .undov-sign { font-size: 1.6em; line-height: 1; }
+  .undov-sm { display: flex; flex-direction: column; align-items: center; font-size: .75em; }
+  .undov-sm.ghost-lim { visibility: hidden; }
   .instruction { color: var(--muted); font-size: .92rem; margin: 0 0 16px; }
 
   .options { display: grid; gap: 10px; margin: 16px 0; }
@@ -617,6 +628,8 @@ data.push(
      \am{левая часть}{правая часть}  расширенная матрица
      \s{ур-е1;ур-е2}  система уравнений (фигурная скобка)
      \v{a}  вектор (стрелка над буквой)
+     \rt{n}{x}  корень (n пусто — квадратный)     \in{от}{до}  интеграл с пределами
+     \sm{от}{до}  сумма с пределами     \lm{x→0}  предел (несколько строк — через ;)
    Рисунок к вопросу: поле image (data-URI).
    --------------------------------------------------------- */
 const SUBJECT_ALG = "Математика (алгебра)";
@@ -758,6 +771,464 @@ data.push(
     ],
     right: ["конус", "гиперболический параболоид", "эллиптический параболоид", "двуполостный гиперболоид", "однополостный гиперболоид", "эллипсоид"],
     correctMap: [4, 3, 0, 5, 2, 1] })
+);
+
+/* ---------------------------------------------------------
+   Предмет: Математика (анализ) (банк вопросов, 90 шт.)
+   Источник: «Банк вопросов по дисциплине Математика (математический анализ)».
+   Ключи взяты из файла (жирным выделены верные варианты); в заданиях на
+   соответствие (11, 33, 37, 54, 58) ключ рассчитан по содержанию.
+   Формулы — мини-разметка (см. функцию rich), в т.ч. \in{от}{до} интеграл,
+   \sm{от}{до} сумма, \lm{под пределом} предел, \rt{n}{x} корень.
+   --------------------------------------------------------- */
+const SUBJECT_MA = "Математика (анализ)";
+const MA_IMG = {
+  q16: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOwAAAC4CAMAAADXEvDHAAAAYFBMVEX////+/v79/f38/Pz7+/v6+vr5+fn4+Pj39/f29vb09PTz8/Py8vLu7u7e3t7CwsKwsLCkpKSampqZmZmWlpaIiIhjY2NeXl5dXV1DQ0McHBwREREMDAwGBgYCAgIAAADP+WXpAAAPA0lEQVR42u1di3qbOgwWvhswEAo0kBDe/y2PftOdbQ1Zm7TZUor3tayBAD+6y7Ig2sZaR3LlIEfCE2XJ1xm3g1WeDBlB3wMskSTvvwfYhAIJUvJbgJXljnIi8T0o2+6VZWb+FmCLfijJ6ORbgK2GqWUVpVcFlqzgvRra1zj+L2+t4592mPaeVsbGxMfYnE2MZ+XLGpiPJGdE6MapL4VbGVjjsduzw5SZlCmrLP+pmItPY0vCrgqsZsIG9pWowFGMlkLG8JtpOpz2ltJVgbWMk5LdwIxMzZDLwFuZFfvDNJ2GSq6LjR1ElcrB8LG7nv8QPiqpsGslxHldMktBkyiHgoJqe2ZjKSgLRlLTIxRYF1ioJ6ZtPQSqBkmpMfPxqunIWKKVKShP0jEfW9oN9DPKoeZZsVOxLt/YkNaG+fjoy2lPP4OcVYJ92W12Q9nDhVo12AQuE6MqDy1rpJ92dZVgWQexT6GD2I3ALNfNxlJHdazqPhD7i+sGixxi6ot2CLBCYdVgc9IuofLY5+xCpHblCurSNzewG9gN7AZ2A7uB3cBuYDewG9gN7AZ2A7uB3cBuYDewG9gN7AZ2A/utwFLuCVPrSvFBQq4brKSyCLHGC4UFJFcNNtAwtWVBQVJiZLJusLSbptOhLZi0Wi/tXxPYvB1P03Qc25Kheq/WTVld94fjdJiGtgxrp6xihHV/mo4Twy3cusHiI23q/ghuZrjfwqlo+8M4TdOhLRXqK6yEMXKGGKzBiohVgaXA1D0cZuoyKWGI4hdWCdaQ3w3TYWZmVswqEQLLetYIllVTSsmuZ7TjOHQlyhblaikL1hXON/0RosuGSK5XZj1DNewcJ0Ud4U79bHdXCVbEkq+5Xp6ZeZpVldfrZGPF7iKHeage10XTj+M4q6o1gv3VyWA9LNjuMi8fh7btFJshDhNYhqWVqwRLRdsP0MxjX5CIpeQkmPIrAxslGJWMDBeq6gRmVjnHu86bdVH2pwwHRYEN0Xhgu9uy3U08M7JZJViNFA05NkQQ3ZENEeRWq1WBFWI+PmMNbJl16alnzTydot2VRCsDK14OT5SYl7pwiDAej3AzCr9OsCLmGiXiWSmj3WVVxdRdpcz+P5pnTcqEaHdH+Mzo5oBVBMzT2sn1gU0oFUxdhnsAMyvpbTyXeEgZ/iDYGBLRDHcaYXcFKzAyJlkXWJrBMstmEnBZMR+PMbwXsLt6XWCfng2za1yYqHUaXuLdPuaZtVkb2M4IFZNSYGWliqeXeLcp8rXJrHjqVKJIgJc9c7LSCuH9ONtdty6w7FRIhPVCq2h9kXY0kN0Tq6rHtLufNxlN6GRB2Sy7J9hdZOrYj8a0WPIQrZQ+EazScK28LmMAeGCvijWzUfHcRCsDK+YMq43x7v92Nwl8Da2kXhdYMCt+S29muzuNx5d4VzxG14NPBctqSiYOJRg+hBnui92VK6NsjPs4NiId3WOhZ+rC7pZBrExmEQLGYJeBZrkia23RRLsLVfUQ7Sw+k40jWjF3UYoK2HhWVSDug9jda7KLGopGXQJ7frxUCeXsRDLY6chwySrFkS6aehhNDw02SqLU5r1gE5KRo1Nm5umH3RUMl5Sif2N3r2FjYE3o/ZRF6jzGgC/x7mme34X7wc/usdlYOvmr2/c22ERqycjymFbfj3PiFV2lnP03LQyvSLihIZJw/r1goa2kwUQQOchuVFVH2F24WfqxwUKvqITeTVmpZt0c0xmM2f5vd9sy+zdm9wrKsrgZSvJ3KyiEfrhAyrFP5sh6jfB+PMR4V+uHBiujFi3qd8ussgJpVZZYa+fJ7Ax55uk0RjfjsRUUDEbZ9zELgy8+dfzLUOyGG30IGScK0PItSJbTH2ePoR++D0FwoeXwPlJ397Rr67a+93h6quumKekqsI4BMdae+N5DWVVV1+9aHqUIvN1lVPCmKuaNZxbgjaWy4Y2KG1ZM2BRFO0zjeDqNh8NxOAyHO4/hcGTZaeWVHlQwxS62rFNF03VtP3SMvd/5giE0hSqbrt0xWN5UwZdt1+0CR/L8IDzxpqs8Pmwromo/jPCqoK6m050HIs1p6q6jLOXg1aqHpx9KHm0P+pZsOIs8cFwjQ1EETN/yQPe+osgJf6EeXf74iw/RPs+RzeBHfhj+wuCLcFztrwMbkElsevXjC01nIaIePQoToayOgWw+h+/CSqguiXgvSVPBoa7WSohY+cjWKC12eFR/bRRXUpZyGzsvYnZDSK+bzsci85gT/0Nj919+x7SNiH9YdOiUibX3biw/E8enV4ENUZdWvYxKl++WwfLNMkmt1lLyL23YYRK55lDPOMFkNN6zdfIO/XPZ7jqnYK7hX7ODbPZYXQK/476DSZGLGd81bMzkc1UfyQjvFnM90uGGPZ6fpJdMBQcAqBODXzyT9IftAbK5rhUtg2lS+KK5N2VjW1vp5JVOReLR2+zdHtRbD29iGy2lfEinIj4hKqpPA3visOLvdr6+wjdOZqb8NLAtizPNntbjuYvCKIR5nwaWxVY9MFhEa/azwFosL0mkeEiwluak0meB9XuOat1fbQZ9jTYGI38eG8tJxomhBw3xfp96/LjpwVqLv1qv/O8WC9MI58SIbwE2aTUqxOh7UBYRBWn9PcAGTe7vvinl34FN97nWkr4JG8P0+G8DNsZf9luANaMk6x/UN74WLMkM6tZf3F8T3r9gzn1wfAgnHNmq2yvloP7kSwpBOUV3BevIab7ixeAc4aJeeLnRC1jMnRii22N7kjbOe+tYipWYu4Jl5zIDnIvfL2RcnLsElu1RHgQ58QG0Or6mBPOl8sfk9x3ZOFD09C/KbI9XHS0skYlFGSo0BSXuA6YJWU85V0RLq+4Nlu/WCHVxcVOYEPNouwRWkin2JStr/QGwFMA4uYtvfUj0XcGmfUlZcjmqKSe85ejcN8adCYCtIPK3R0UxUati5gzLf/19wQ5lTGNe2l8fGMxCtSqDFZhO6kqTfKj8noU/UAmv1Lg5DL8fWMWUdX+IanYnZJeVWzCGbC4kU/Zjb8pEpYpP+/6pRCcg8bvMspzkSA1fdmbBFLFoT8cUQ92JP2lbA6HTC3b05bL1s8PrutR5RgQTQxS6UsUC3lvBKhDCHE+HIVat/E5ZnZTd/nm/f74wun2HX884hkfX9Yeu77qLxz9P/R9P10/tPp7z1ZjP3/UDn7zrni+f/40x32+sr8OqlPAbWENF29Z183RpNA3va5uaNzWmn7u+buun9uLhQ9vwwfXrz+e58LruhgrnOr8ePqzrtu/i7sv388ao+fJPzQloj33zahbPoi44cSa/MKwyXuiMQrA288xfzT4nyi8eH/pShEyHxZ1Zmjaws4m0r3elachT71lmHXnvVH7jkNpq67CSbFcWln43PQKeqsvlpQkii0Zuca8X1lFwTRcU2YvHU1/Sy4quxVH3KrdaqwuTnKyNscg8yW+d0HKYviOmKWbIX3tQqJ5F6ZK6MOR8G6E5Dqc93mlZYzJaXzw+70svRDjbLyV+RLLrKdqZ1/utdIk0vuirqAmlunHMej1IG+MJ51+BjSdXl56UYAfAoV6mLMuu4yPbPV5vefHJMhtrMU8YLo6mj2cVZ9eBc8yec8dsbGxy81RlrAn1hLnZ1M/J/V8nMiWqfhjT8kBHGUa365nd256sajoHB/TS8X6AneWzvhpC4IcjvJ4lJ65AfbUfn7E/UIS4aCiRN46og8CBlgkzVyFekSTHRLNSsVyGqeLfcio86hgW3MHowaXo3hLZyJ9fJ1ez3OYwETe7FWlMhHgR2ymGK+NZMBxTnsEGgFVvBgL8aPKlDmICBIe7ylDCYocx0hnHwnBYwgcCgWDTJLaKEWmYJ+SuAKviLe56vo1YM/NWPCslq/dcnDvo0NCBY5LgF8LZJKQzXa3O4nt9b6csymJT2B/W7Vf6xpiYsYJFjYPDZk/0dr2xM3Awz9xBaC0Z6RrrMRYCAR9i749oHG6nrKI0g0qY63muq5YhLRKO+VmvkGr7twMBsHCmFtqOIsAMVNgQX8p85hsLN+t+vKsN7HQr2JxCTiyxjpwo5Ctt/LaCYgfAimpg7fIeBRVn/ZiPz9jbzmvY+FGkSwpIWfJOh9kK4c1tNw4wzwF16wI5W6muAqtQ4JVSsR/ZA0OJ3ptsnKulJDhfPfeo+EKVweJ+lOsGvKo6TekDqzNzktWhlOm0c0zl67QxC5pBCi0reEDi3gDLPgVWEIvzh8bhano8TccithA7y0qC6tVhmvZFND8fkFlNxUTHKia1rmPj9wbvsYwro/5YxVVN5/tz/jeWRVEec1qQWXB/eeD9bc++pv1ADopPnx6KEwrgZ7X/+WCNht4ZmqGKfUrOg3pcrMTlJ2T/soWEb+RyKofYPeDmVGosuqvGJo35GbofZflu2VuMSz/OsQRoLqbahBegnu/3KQp4ybMqZGUcbgUrmLIqOVbHqPTDncDiOfI/BotZjAWZpSCVYYGaGIpbaCKNBuHlOA5oAmg+oJ/wsvbJjEVOd0u4eT97DEMJXMl5X2SYldTmNJVYNXBmmqCLFdvhoh7inMLtCTd29aaayilycX4fysJjCGSHaq5Qfb0/oyiRrKPYS19IC5NhckNjVwPaTIXbFZTn55kZKk/hbgpqdowsKIu1h4sPQ2T6BPtl5Tlahxfe8j7FMvuhojKOPtmH4lMEDviy+4AVsbocYFlk9Lm7x/E+k/xYRCW1YFnYXJly4AdSDcKrD0zME9QwkzeNSjPcNUk+7KJXuOAbO/Jx4cfRs4DTwsMi26Jfdonvf+bM/P3ABiwgEMmStk2oyEIRouimCxSx7KYF7P7ktfL3nHl3WA1C505FniVubiWVh3MFlP9MRsErcF8CLOr/1dIsncmiPwk1RnrpzRRYcmtyb5WVifoilGXbJpeCc/7ciTzn2NhwtGnPH4aY38ERk9X6a4DNPfoBnE82s34KsYEUe8ZLOSqBr5FMQxLrc9VXoSzz8nLNBIe6Nok55YX3E5D28zxD5rT7IgqKGRDL184mky1/bCSWurG3aM6dCiwDS+JjwHTMF1FQDzg2sBvYDewGdgO7gd3AbmA3sBvYDewGdgO7QrDXjqTdq+QPFWyrGrKsMC8uvwXYZC4M1LSNbWzjH4z/AIsSiJB9BLdCAAAAAElFTkSuQmCC",
+  q38: "data:image/png;base64,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",
+  q83: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAACtCAMAAAC0hXLOAAAAM1BMVEX////w8PDp6enh4eHZ2dnQ0NDHx8e9vb2ysrKnp6eampqMjIwAgAB8fHxoaGhNTU0AAAAbD72/AAACsklEQVR42u3d0bKbIBAGYEABkQL7/k9bTTrT2Mk5KRYt+v97k5scJp+yu2rOZJViMBiMmtBuTstLmrHYssSwsAUAujndZWWrGYytIgx7455WtrdobC9e6YSg3rDdwg4jBPvVPUgY7t++3rBzBFD/mdxassFgq4379uXsLdthqLfswSsc9m/3qCDZMGpkNpRbUNkKkf2KV2STTTbZZJNNNtlkk0022WSfy7YSAdmmiMdjm5jF4LGTloKX29FYmeHY0aggFo0dFnEWDcZe1VoyWN92a+NyMmGxtfyKiJbbCvG7kTUGnHP9yvYwV6Ybdnr83yVvPMkmm2yy/7uimziV/aMypPov/nZhsskmm2yyySabbLLJJptssskmm2yyySabbLLJJptssskmm2yyySabbLLJJptssskmm2yyySabbLLJJptsssk+lT2IiEY825IRN7mTCZEdZUBkS0EsaaPMiOwgFpFd2ravi7CNJMTLFS8ekZ3EALJ140u0i7Dn5ql9AbZ//KgAYiXn/fYl2aC/xFF/nHr5JGSfkRUKMcgm+3IKVnKy2cBY0shG+0AdsnfcxtygpO25gbtJJa+l36eBfXnbLhBBNkDfPvi5VJ/sOrSJUnwfbF8k6n9AV7x9eBwk3wM7OOV2zTLYkdDJr/TSyybftfTelK69vjmMrSWdWQ1SJ+y5nDhczFTOiziKbXNsMXfJTHlY1vp8jCfVA3vJ0LnROkGVj+XKhk76tisSmuwaEfc2WcKj5I/71Mfltm20cv5iblV+fim/T31gSWu08vRx1+xQH8luMzhw/DScza27wcVO2GOjEURT+X4U3zPHa6cUHsFO2Sqd24xL9GoW982+iU917mCTLyeohBZdO3k7rBN020/s6vo5eSprgypBYbHRHjOQTTbZZJNNNtlkX5D9E1fdE24XYu1jAAAAAElFTkSuQmCC"
+};
+const ma = o => Object.assign({ subject: SUBJECT_MA }, o);
+
+data.push(
+  ma({ question: "Общий член числовой последовательности имеет вид x_{n}=\\f{n+1}{n^{2}+2}. Вычислить пятый член этой последовательности:",
+    options: ["\\f{3}{19}", "\\f{1}{5}", "\\f{5}{18}", "\\f{2}{9}"], correctIndex: 3 }), // d
+
+  ma({ type: "open", numeric: 9, answerText: "9",
+    question: "Последовательность задана рекуррентным соотношением a_{1}=1, a_{2}=3, a_{n+1}=a_{n}⋅a_{n-1}. Тогда четвертый член этой последовательности равен" }),
+
+  // ВНИМАНИЕ: по ключу из файла верны b и c. Строго говоря, последовательность b) 2^{(-1)^n} принимает только значения 1/2 и 2 и ограничена сверху; неограничена лишь c). Оставлен ключ из файла.
+  ma({ type: "multiple", question: "Какие из перечисленных последовательностей не ограничены сверху? (не менее двух ответов)",
+    options: ["x_{n}=\\f{1}{n}", "x_{n}=2^{(-1)^{n}}", "x_{n}=n^{2}+1", "x_{n}=\\f{n+1}{n}"],
+    correctIndexes: [1, 2] }), // b, c
+
+  ma({ question: "Числовая последовательность называется сходящейся, если:",
+    options: ["она ограничена", "она имеет конечный предел", "она имеет бесконечный предел", "она не имеет предела"], correctIndex: 1 }), // b
+
+  ma({ question: "Если \\lm{n→∞}x_{n}=0, то последовательность {x_{n}} называется:",
+    options: ["убывающей", "бесконечно малой", "бесконечно большой", "ограниченной"], correctIndex: 1 }), // b
+
+  ma({ type: "open", numeric: 5, answerText: "5",
+    question: "Приращение Δy функции y=x^{2} при изменении значения аргумента от -2 до 3 равно" }),
+
+  ma({ question: "Даны функции f(x)=sin x^{2} и g(x)=x^{3}+1. Найдите f(g(x))",
+    options: ["f(g(x))=sin x^{6}+1", "f(g(x))=sin(x^{3}+1)^{2}", "f(g(x))=sin^{3}x^{2}+1", "f(g(x))=sin^{3}(x^{2}+1)"], correctIndex: 1 }), // b
+
+  ma({ question: "Функция f(x), называется возрастающей на множестве X, если для любых x_{1}∈X и x_{2}∈X таких, что x_{1}<x_{2} следует",
+    options: ["f(x_{1})<f(x_{2})", "f(x_{1})>f(x_{2})", "f(x_{1})≤f(x_{2})", "f(x_{1})≥f(x_{2})"], correctIndex: 0 }), // a
+
+  ma({ question: "Вычислить предел\n\\lm{x→1}\\f{x^{2}-1}{x-1}",
+    options: ["∞", "0", "1", "2"], correctIndex: 3 }), // d
+
+  ma({ question: "Вычислить предел\n\\lm{x→0}\\f{sin 3x}{4x}",
+    options: ["∞", "\\f{1}{4}", "\\f{3}{4}", "0"], correctIndex: 2 }), // c
+
+  ma({ type: "match", question: "Установите соответствие между пределом и его значением",
+    left: [
+      "\\lm{x→∞}\\f{6x^{4}-8x^{2}+x}{5x^{4}+7x+2}",
+      "\\lm{x→∞}\\f{4x^{2}+6x+3}{x^{3}+11x^{2}+2}",
+      "\\lm{x→∞}\\f{5x^{3}+7x^{2}-8}{4x^{2}+6x+1}",
+      "\\lm{x→∞}\\f{12x^{3}+5x^{2}+7}{6x^{3}+5x^{2}+3}"
+    ],
+    right: ["0", "∞", "\\f{6}{5}", "2"],
+    correctMap: [2, 0, 1, 3] }), // a-3, b-1, c-2, d-4
+
+  ma({ question: "Если \\lm{x→a}f(x)=∞, то при x→a функция f(x) называется:",
+    options: ["непрерывной", "бесконечно малой", "бесконечно большой", "ограниченной"], correctIndex: 2 }), // c
+
+  ma({ question: "Пусть α(x) и β(x) две бесконечно малые функции при x→x_{0}. Тогда, если \\lm{x→x_{0}}\\f{α(x)}{β(x)}=1, то",
+    options: [
+      "α(x) называется бесконечно малой более высокого порядка, чем β(x)",
+      "α(x) и β(x) называются бесконечно малыми одного порядка малости",
+      "β(x) называется бесконечно малой более высокого порядка, чем α(x)",
+      "α(x) и β(x) называются эквивалентными бесконечно малыми"
+    ], correctIndex: 3 }), // d
+
+  ma({ question: "Функция y=f(x) называется непрерывной в точке x_{0}, если",
+    options: [
+      "\\lm{x→0}[f(x_{0}+Δx)-f(x_{0})]=f(x_{0})",
+      "\\lm{x→x_{0}}[f(x_{0}+Δx)-f(x_{0})]=f(x_{0})",
+      "\\lm{x→x_{0}}f(x)=f(x_{0})",
+      "\\lm{x→0}f(x)=f(x_{0})"
+    ], correctIndex: 2 }), // c
+
+  ma({ question: "Если приращение функции f(x) в некоторой окрестности точки x_{0} представляется в виде: Δf=A⋅Δx+o(Δx), Δx→0 (A — const), то",
+    options: ["A=f'(x_{0})", "A=f(x_{0})", "A=Δx", "A=Δf"], correctIndex: 0 }), // a
+
+  ma({ question: "Для графика функции y=f(x), изображенного на рисунке, справедливо утверждение…", image: MA_IMG.q16,
+    options: ["f'(3)=0", "f'(3) не существует", "f'(3)=-1", "f'(3)=1"], correctIndex: 0 }), // a
+
+  ma({ question: "Производная функции f(x) в точке x_{0} равна",
+    options: [
+      "углу наклона касательной к графику этой функции в точке x_{0}",
+      "тангенсу угла наклона касательной к графику этой функции в точке x_{0}",
+      "синусу угла наклона касательной к графику этой функции в точке x_{0}",
+      "котангенсу угла наклона касательной к графику этой функции в точке x_{0}"
+    ], correctIndex: 1 }), // b
+
+  ma({ type: "open", numeric: 8, answerText: "8",
+    question: "Найдите тангенс угла наклона касательной к графику функции f(x)=x^{2} в точке x_{0}=4" }),
+
+  ma({ type: "open", numeric: 12, answerText: "12",
+    question: "Закон движения точки задан формулой S(t)=t^{2}+2t. Укажите скорость движения точки при t=5" }),
+
+  ma({ question: "Найти f'(x), если f(x)=\\rt{}{x}-3x^{2}+5",
+    options: ["\\f{1}{2\\rt{}{x}}-2x+5", "\\f{1}{\\rt{}{x}}-x", "\\f{1}{2\\rt{}{x}}-6x+5", "\\f{1}{2\\rt{}{x}}-6x"], correctIndex: 3 }), // d
+
+  ma({ question: "Производная функции y=e^{x^{2}} равна",
+    options: ["y'=e^{x^{2}}", "y'=2xe^{x^{2}}", "y'=x^{2}e^{x^{2}-1}", "y'=e^{x}"], correctIndex: 1 }), // b
+
+  ma({ question: "Производная второго порядка функции y=e^{3x-2} имеет вид",
+    options: ["9", "3e^{3x-2}", "9e", "9e^{3x-2}"], correctIndex: 3 }), // d
+
+  ma({ question: "Укажите, чему равен дифференциал d(x^{2}+1)=",
+    options: ["2x dx", "(x^{2}+1)dx", "(\\f{x^{3}}{3}+x)dx", "2x"], correctIndex: 0 }), // a
+
+  ma({ question: "Если к пределу \\lm{x→\\f{π}{2}}\\f{cos x}{x-\\f{π}{2}} применить правило Лопиталя, то он примет вид",
+    options: [
+      "\\lm{x→\\f{π}{2}}cos x",
+      "\\lm{x→\\f{π}{2}}\\f{-(x-\\f{π}{2})sin x-cos x}{(x-\\f{π}{2})^{2}}",
+      "\\lm{x→\\f{π}{2}}\\f{-sin x}{x-\\f{π}{2}}",
+      "\\lm{x→\\f{π}{2}}(-sin x)"
+    ], correctIndex: 3 }), // d
+
+  ma({ question: "Если функции F(x) и Φ(x) являются первообразными одной и той же функции, то они отличаются на",
+    options: ["постоянное слагаемое", "переменное слагаемое", "постоянный множитель", "переменный множитель"], correctIndex: 0 }), // a
+
+  ma({ question: "Среди перечисленных функций укажите первообразную функцию для функции f(z)=z^{4}",
+    options: ["F(z)=\\f{z^{5}}{5}", "F(z)=4z^{3}", "F(z)=z^{3}", "F(z)=z^{5}"], correctIndex: 0 }), // a
+
+  ma({ question: "Множество первообразных функции f(x)=x^{2}-5 имеет вид",
+    options: ["x^{3}-5x+C", "\\f{x^{3}}{3}-5+C", "2x+C", "\\f{x^{3}}{3}-5x+C"], correctIndex: 3 }), // d
+
+  ma({ question: "Совокупность всех первообразных функции f(x) называется",
+    options: [
+      "неопределенным интегралом от функции f(x)",
+      "определенным интегралом от функции f(x)",
+      "производной от функции f(x)",
+      "степенным рядом от функции f(x)"
+    ], correctIndex: 0 }), // a
+
+  ma({ type: "multiple", question: "Какие равенства выражают свойства неопределенных интегралов? (не менее двух вариантов)",
+    options: [
+      "\\in{}{}k⋅f(v)dv=k\\in{}{}f(v)dv, где k — const",
+      "\\in{}{}(f(x)⋅g(x))dx=\\in{}{}f(x)dx⋅\\in{}{}g(x)dx",
+      "\\in{}{}\\f{f(v)}{g(v)}dv=\\f{\\in{}{}f(v)dv}{\\in{}{}g(v)dv}, где g(v)≠0",
+      "\\in{}{}(f(x)+g(x))dx=\\in{}{}f(x)dx+\\in{}{}g(x)dx"
+    ],
+    correctIndexes: [0, 3] }), // a, d
+
+  ma({ question: "Выберите формулу интегрирования по частям для неопределенного интеграла",
+    options: [
+      "\\in{}{}uv'dx=uv+\\in{}{}vu'dx",
+      "\\in{}{}uvdx=uv-\\in{}{}vdu",
+      "\\in{}{}udv=u'v'+\\in{}{}vdu",
+      "\\in{}{}udv=uv-\\in{}{}vdu"
+    ], correctIndex: 3 }), // d
+
+  ma({ question: "Формула замены переменных в неопределенном интеграле (предполагается, что x=φ(t))",
+    options: [
+      "\\in{}{}f(x)dx=\\in{}{}f(x)⋅φ'(t)dt",
+      "\\in{}{}f(x)dx=\\in{}{}f(φ(t))⋅φ'(t)dt",
+      "\\in{}{}f(x)dx=\\in{}{}f(φ(t))⋅φ(t)dt",
+      "\\in{}{}f(x)dx=\\in{}{}f(x)⋅φ(t)dt"
+    ], correctIndex: 1 }), // b
+
+  ma({ type: "multiple", question: "Укажите основные методы интегрирования (не менее двух ответов)",
+    options: [
+      "метод неопределенных коэффициентов",
+      "непосредственное интегрирование",
+      "замена переменной",
+      "метод наименьших квадратов",
+      "интегрирование по частям",
+      "формулы сокращенного умножения"
+    ],
+    correctIndexes: [1, 2, 4] }), // b, c, e
+
+  ma({ type: "match", question: "Установите соответствие между неопределенными интегралами и совокупностями функций:",
+    left: ["\\in{}{}\\f{dt}{t}=", "\\in{}{}cos t dt=", "\\in{}{}sin t dt=", "\\in{}{}e^{t}dt="],
+    right: ["e^{t}+C", "-cos t+C", "sin t+C", "ln|t|+C"],
+    correctMap: [3, 2, 1, 0] }), // a-4, b-3, c-2, d-1
+
+  ma({ question: "По смыслу определенный интеграл — это:",
+    options: ["множество производных функции", "множество первообразных функций", "дифференциал функции", "число"], correctIndex: 3 }), // d
+
+  ma({ question: "Если F(x) — первообразная функции f(x) на отрезке [a, b], то формула Ньютона-Лейбница имеет вид:",
+    options: ["\\in{a}{b}f(x)dx=F(a)-F(b)", "\\in{a}{b}f(x)dx=F(b)-F(a)", "\\in{a}{b}f(x)dx=F(a)", "\\in{a}{b}f(x)dx=F(b)"], correctIndex: 1 }), // b
+
+  ma({ question: "Вычислить\n\\in{0}{1}x^{2}dx",
+    options: ["\\f{1}{3}", "\\f{2}{3}", "1", "3"], correctIndex: 0 }), // a
+
+  ma({ type: "match", question: "Какие методы применяются при вычислении заданных интегралов?",
+    left: ["\\in{0}{π}x sin(2x+1)dx", "\\in{1}{3}\\f{dx}{1+x^{2}}", "\\in{1}{e}x^{2}ln x dx"],
+    right: [
+      "интегрирование по частям",
+      "замена переменной",
+      "непосредственное интегрирование (применение формул и табличных интегралов)"
+    ],
+    correctMap: [0, 2, 0] }), // a-1, b-3, c-1
+
+  ma({ question: "Выбрать формулу для вычисления площади выделенной области", image: MA_IMG.q38,
+    options: ["\\in{1}{2}(x^{2}+1)dx", "-\\in{1}{2}(x^{2}+1)dx", "\\in{0}{1}(x^{2}+1)dx", "-\\in{0}{1}(x^{2}+1)dx"], correctIndex: 2 }), // c
+
+  ma({ question: "Правило вычисления несобственного интеграла\n\\in{a}{+∞}f(x)dx=",
+    options: [
+      "\\lm{b→+∞}\\in{a}{b}f(x)dx",
+      "\\lm{b→a}\\in{a}{b}f(x)dx",
+      "\\lm{a→+∞}\\in{a}{+∞}f(x)dx",
+      "\\lm{a→-∞}\\in{a}{+∞}f(x)dx"
+    ], correctIndex: 0 }), // a
+
+  ma({ type: "multiple", question: "Из перечисленных интегралов укажите все несобственные (не менее двух ответов)",
+    options: ["\\in{2}{+∞}\\f{dx}{4x-5}", "\\in{0}{1}\\f{dx}{4x+5}", "\\in{0}{1}\\f{dx}{sin x}", "\\in{0}{1}\\f{dx}{cos x}"],
+    correctIndexes: [0, 2] }), // a, c
+
+  ma({ question: "Дифференциальным уравнением называется",
+    options: [
+      "уравнение, дифференцируемое относительно независимой переменной x",
+      "уравнение, разрешенное относительно производной",
+      "уравнение, связывающее независимую переменную x, искомую функцию y(x) и ее производные",
+      "уравнение, для решения которого необходимо найти производную"
+    ], correctIndex: 2 }), // c
+
+  ma({ question: "Среди предложенных уравнений укажите вид дифференциального уравнения, разрешенного относительно производной",
+    options: ["y'=f(x,y)", "F(x,y,y')=0", "M(x,y)dx+N(x,y)dy=0", "x=f(y,y')"], correctIndex: 0 }), // a
+
+  ma({ question: "Интегральной кривой ДУ называется",
+    options: [
+      "построенный на плоскости XOY, график всякой дифференцируемой функции y=φ(x)",
+      "построенный на плоскости XOY, график всякого решения y=φ(x) этого ДУ",
+      "построенный на плоскости XOY, график особого решения y=φ(x) этого ДУ",
+      "построенный на плоскости XOY, график этого ДУ"
+    ], correctIndex: 1 }), // b
+
+  ma({ question: "Определите, какой порядок имеет дифференциальное уравнение 3y''-y'=x^{5}",
+    options: ["первый", "второй", "третий", "пятый"], correctIndex: 1 }), // b
+
+  ma({ question: "Задачей Коши для ДУ называется",
+    options: [
+      "задача отыскания общего решения ДУ",
+      "задача отыскания функции Коши",
+      "задача отыскания частного решения ДУ",
+      "задача определения количества решений ДУ"
+    ], correctIndex: 2 }), // c
+
+  ma({ question: "Если ДУ имеет вид xy'=y и y(4)=12, то в общем решении y=Cx константа C равна",
+    options: ["\\f{1}{3}", "3", "4", "\\f{1}{4}"], correctIndex: 1 }), // b
+
+  ma({ question: "Выберите общий вид линейного ДУ первого порядка",
+    options: ["y'=φ(\\f{y}{x})", "y'=f(x)g(y)", "y'+p(x)y=f(x)", "y'+p(x)y=f(x)y^{n}"], correctIndex: 2 }), // c
+
+  ma({ question: "ДУ M(x,y)dx+N(x,y)dy=0 называется однородным, если",
+    options: [
+      "функции M(x,y), N(x,y) — многочлены одной степени",
+      "функции M(x,y), N(x,y) однородные одной степени однородности",
+      "функции M(x,y), N(x,y) непрерывные",
+      "функции M(x,y), N(x,y) дифференцируемы"
+    ], correctIndex: 1 }), // b
+
+  ma({ question: "При решении линейного уравнения y'+P(x)y=Q(x) методом Бернулли делается замена",
+    options: ["\\f{y}{x}=u", "y=u+x", "y=u⋅v", "y=\\f{dy}{dx}"], correctIndex: 2 }), // c
+
+  ma({ question: "Определите тип ДУ y'(x^{2}+1)=y",
+    options: ["линейное", "с разделяющимися переменными", "однородное", "Бернулли"], correctIndex: 1 }), // b
+
+  ma({ question: "Общее решение дифференциального уравнения \\f{dy}{y^{2}}=x dx имеет вид",
+    options: ["y=\\f{x^{2}}{2}+C", "-\\f{1}{y}=\\f{x^{2}}{2}+C", "\\f{1}{y}=\\f{x^{2}}{2}+C", "-\\f{1}{y}=x^{2}+C"], correctIndex: 1 }), // b
+
+  ma({ type: "multiple", question: "Среди перечисленных уравнений выделите линейные однородные дифференциальные уравнения",
+    options: ["y''-y'+5y=0", "y''-y'+4y=x", "y''+y'+y=x", "y''-y'+4y=0"],
+    correctIndexes: [0, 3] }), // a, d
+
+  ma({ question: "Дано дифференциальное уравнение y''+6y'+5y=0, тогда соответствующее ему характеристическое уравнение имеет вид",
+    options: ["k^{2}-6k-5=0", "k+11=0", "1+6k+5k^{2}=0", "k^{2}+6k+5=0"], correctIndex: 3 }), // d
+
+  ma({ type: "match", question: "Установите соответствие между дифференциальными уравнениями и их характеристическими уравнениями",
+    left: ["y^{IV}-5y'''+y''=0", "y^{IV}-5y'''+y''-3y'=0", "y^{IV}+y''-3y'+y=0"],
+    right: ["λ^{4}-5λ^{3}+λ^{2}-3λ=0", "λ^{4}-5λ^{3}+λ^{2}=0", "λ^{4}+λ^{2}-3λ+1=0"],
+    correctMap: [1, 0, 2] }), // a-2, b-1, c-3
+
+  ma({ question: "Общее решение ЛОДУ y''+py'+qy=0 имеет вид y=C_{1}e^{3x}+C_{2}xe^{3x}. Какие корни у характеристического уравнения?",
+    options: [
+      "два действительных различных корня",
+      "два комплексных, сопряженных друг другу",
+      "два действительных равных друг другу корня",
+      "один комплексный корень"
+    ], correctIndex: 2 }), // c
+
+  ma({ question: "Для нахождения общего решения ЛОДУ с постоянными коэффициентами y''+py'+qy=0 составляется характеристическое уравнение k^{2}+pk+q=0. Если его корни k_{1}=a+ib и k_{2}=a-ib комплексные сопряженные, то",
+    options: [
+      "y=C_{1}e^{ax}+C_{2}xe^{bx}",
+      "y=C_{1}e^{ax}+C_{2}e^{bx}",
+      "y=e^{ax}(C_{1}cos(bx)+C_{2}sin(bx))",
+      "y=e^{ax}x(C_{1}cos(bx)+C_{2}sin(bx))"
+    ], correctIndex: 2 }), // c
+
+  ma({ question: "Выбрать формулу общего члена ряда \\f{1}{2^{2}}+\\f{2}{2^{3}}+\\f{3}{2^{4}}+\\f{4}{2^{5}}+…",
+    options: ["u_{n}=\\f{n}{2^{n+1}}", "u_{n}=\\f{n-1}{2^{n}}", "u_{n}=\\f{n}{n!+1}", "u_{n}=\\f{n}{(n+1)!}"], correctIndex: 0 }), // a
+
+  ma({ type: "match", question: "Установите соответствие между рядами и их видами",
+    left: ["\\sm{n=0}{∞}\\f{n}{n^{2}+3}", "\\sm{n=0}{∞}\\f{(-1)^{n}n}{n^{2}+3}", "\\sm{n=0}{∞}\\f{n}{n^{2}+3}(x-3)^{n}"],
+    right: ["степенной", "знакоположительный", "знакочередующийся"],
+    correctMap: [1, 2, 0] }), // a-2, b-3, c-1
+
+  ma({ question: "Вычислить частичную сумму S_{3} заданного числового ряда\n\\sm{n=1}{∞}\\f{n}{n+1}",
+    options: ["\\f{3}{4}", "\\f{23}{12}", "3", "0"], correctIndex: 1 }), // b
+
+  ma({ question: "Степенным рядом называется бесконечная сумма вида:",
+    options: [
+      "a_{0}+a_{1}(x-x_{0})+a_{2}(x-x_{0})^{2}+...",
+      "a_{0}+a_{1}+a_{2}+...",
+      "a_{0}+\\f{a_{1}}{(x+x_{0})}+\\f{a_{2}}{(x+x_{0})^{2}}+...",
+      "a_{0}+\\f{a_{1}}{(x-x_{0})}+\\f{a_{2}}{(x-x_{0})^{2}}+..."
+    ], correctIndex: 0 }), // a
+
+  ma({ type: "multiple", question: "Среди перечисленных рядов укажите степенные",
+    options: [
+      "\\sm{n=0}{∞}\\f{n}{n^{2}+3}x^{n}",
+      "\\sm{n=0}{∞}\\f{2^{n}}{n^{2}+3}(x+3)^{n}",
+      "\\sm{n=0}{∞}\\f{n^{x}}{n^{2}+3}",
+      "\\sm{n=0}{∞}\\f{e^{x}}{n^{2}+3}"
+    ],
+    correctIndexes: [0, 1] }), // a, b
+
+  ma({ question: "Пусть \\sm{n=1}{∞}u_{n} — ряд с положительными членами, для которого \\lm{n→∞}\\f{u_{n+1}}{u_{n}}<1, тогда по признаку Даламбера этот ряд",
+    options: ["сходится", "расходится", "может сходиться или расходиться", "не может ни сходиться, ни расходиться"], correctIndex: 0 }), // a
+
+  ma({ question: "Пусть \\sm{n=1}{∞}u_{n} — ряд с положительными членами, для которого \\lm{n→∞}\\rt{n}{u_{n}}>1, тогда по радикальному признаку Коши этот ряд",
+    options: ["сходится", "расходится", "может сходиться или расходиться", "не может ни сходиться, ни расходиться"], correctIndex: 1 }), // b
+
+  ma({ type: "multiple", question: "Среди перечисленных рядов укажите сходящиеся",
+    options: ["\\sm{n=1}{∞}\\f{1}{n}", "\\sm{n=1}{∞}\\f{1}{\\rt{}{n}}", "\\sm{n=1}{∞}\\f{1}{n^{2}}", "\\sm{n=1}{∞}\\f{1}{n^{3}}"],
+    correctIndexes: [2, 3] }), // c, d
+
+  ma({ type: "multiple", question: "Среди перечисленных знакочередующихся рядов укажите те, которые сходятся абсолютно",
+    options: [
+      "\\sm{n=1}{∞}(-1)^{n}2^{n}",
+      "\\sm{n=1}{∞}\\f{(-1)^{n}n}{n+1}",
+      "\\sm{n=1}{∞}\\f{(-1)^{n}}{2^{n}}",
+      "\\sm{n=1}{∞}\\f{(-1)^{n}}{n^{2}}"
+    ],
+    correctIndexes: [2, 3] }), // c, d
+
+  // ВНИМАНИЕ: по ключу из файла верно a) (-2, 2). Для ряда по степеням (x-3) при R=2 интервал сходимости (1, 5) — вариант c). Оставлен ключ из файла.
+  ma({ question: "Если радиус сходимости степенного ряда \\sm{n=0}{∞}a_{n}(x-3)^{n} равен R=2, то интервал сходимости этого ряда",
+    options: ["(-2, 2)", "(-3, 3)", "(1, 5)", "(5, 7)"], correctIndex: 0 }), // a
+
+  ma({ question: "Совокупность пар (x,y) значений x и y, при которых определено значение функции z=f(x,y) называется",
+    options: [
+      "областью определения функции z=f(x,y)",
+      "графиком функции z=f(x,y)",
+      "частной производной функции z=f(x,y)",
+      "областью значений функции z=f(x,y)"
+    ], correctIndex: 0 }), // a
+
+  ma({ question: "Линией уровня функции f(x,y) называется геометрическое место точек, координаты которых удовлетворяют уравнению",
+    options: ["x=C, C — const", "y=C, C — const", "f(x,y)+C=f, C — const", "f(x,y)=C, C — const"], correctIndex: 3 }), // d
+
+  ma({ question: "Для функции двух переменных z=f(x,y), частное приращение по y в точке (x,y)",
+    options: ["Δ_{y}z=f(x+Δx,y)-f(x,y)", "Δ_{y}z=f(x+Δx,y+Δy)-f(x,y)", "Δ_{y}z=f(x,y+Δy)-f(x,y)", "Δ_{y}z=f(Δx,Δy)-f(x,y)"], correctIndex: 2 }), // c
+
+  ma({ question: "Функция f(x,y) называется непрерывной в точке X_{0}(x_{0},y_{0}), если она определена в этой точке и имеет место равенство",
+    options: [
+      "\\lm{x→x_{0};y→y_{0}}f(x,y)=(x_{0},y_{0})",
+      "\\lm{x→x_{0};y→y_{0}}f(x_{0},y_{0})=(x,y)",
+      "\\lm{x→x_{0};y→y_{0}}f(x,y)=f(x_{0},y_{0})",
+      "\\lm{x→x_{0};y→y_{0}}f(x_{0},y_{0})=f(x,y)"
+    ], correctIndex: 2 }), // c
+
+  ma({ question: "Точка, в которой функция z=f(x,y) не является непрерывной, называется",
+    options: ["точкой разрыва", "точкой максимума", "точкой разворота", "точкой экстремума"], correctIndex: 0 }), // a
+
+  // ВНИМАНИЕ: по ключу из файла ответ 5. При подстановке в выражение x-2xy+y^2 в записи из файла получается 7. Оставлен ключ из файла.
+  ma({ type: "open", numeric: 5, answerText: "5",
+    question: "Вычислите предел \\lm{x→2;y→-1}(x-2xy+y^{2})=" }),
+
+  ma({ question: "При вычислении частной производной по x от функции z=f(x,y) предполагается, что y — это",
+    options: ["зависимая переменная", "независимая переменная", "функция", "константа"], correctIndex: 3 }), // d
+
+  ma({ question: "Для функции двух переменных z=f(x,y) в точке (x_{0},y_{0}) частная производная переменной x определяется:",
+    options: [
+      "\\f{∂z}{∂x}=\\lm{Δx→0}\\f{Δ_{x}z}{Δx}=\\lm{Δx→0}\\f{f(x_{0}+Δx, y_{0})-f(x_{0}, y_{0})}{Δx}",
+      "\\f{∂z}{∂x}=\\lm{Δy→0}\\f{Δ_{y}z}{Δy}=\\lm{Δy→0}\\f{f(x_{0}, y_{0}+Δy)-f(x_{0}, y_{0})}{Δy}",
+      "\\f{∂z}{∂x}=\\lm{Δy→0}\\f{Δ_{x}z}{Δy}=\\lm{Δy→0}\\f{f(x_{0}+Δx, y_{0})-f(x_{0}, y_{0})}{Δy}",
+      "\\f{∂z}{∂x}=\\lm{Δx→0}\\f{Δ_{y}z}{Δx}=\\lm{Δx→0}\\f{f(x_{0}, y_{0}+Δy)-f(x_{0}, y_{0})}{Δx}"
+    ], correctIndex: 0 }), // a
+
+  ma({ question: "Частная производная z'_{y} функции z=x^{2}cos y равна",
+    options: ["2x cos y", "x^{2}sin y", "-2x sin y", "-x^{2}sin y"], correctIndex: 3 }), // d
+
+  ma({ question: "Выбрать полный дифференциал функции z=f(x,y):",
+    options: ["dz=z'_{x}+z'_{y}", "dz=z'_{x}dx+z'_{y}dy", "dz=dx+dy", "dz=\\f{z'_{x}dx}{z'_{y}dy}"], correctIndex: 1 }), // b
+
+  ma({ question: "Для заданной функции z=f(x,y) вектор {z'_{x}, z'_{y}}, вычисленный в точке (x,y) называется",
+    options: ["градиентом", "ротором", "направляющим", "нормальным"], correctIndex: 0 }), // a
+
+  ma({ question: "Функция z=f(x,y) имеет максимум в точке (x_{0},y_{0}), если для любой точки (x,y) из некоторой проколотой окрестности (x_{0},y_{0}) выполняется неравенство",
+    options: ["f(x,y)+f(x_{0},y_{0})=0", "f(x,y)<f(x_{0},y_{0})", "f(x,y)-f(x_{0},y_{0})=0", "f(x,y)>f(x_{0},y_{0})"], correctIndex: 1 }), // b
+
+  ma({ question: "Пусть в окрестности точки M(x_{0},y_{0}) функция z=f(x,y) имеет непрерывные частные производные, причем в точке M первые ч.п. равны нулю. В точке M вычислены значения A=\\f{∂^{2}z}{∂x^{2}}, B=\\f{∂^{2}z}{∂x∂y}, C=\\f{∂^{2}z}{∂y^{2}}, Δ=AC-B^{2}. При каких условиях в точке M функция имеет минимум?",
+    options: ["Δ>0, A>0", "Δ>0, A<0", "Δ<0, A>0", "Δ<0, A<0"], correctIndex: 0 }), // a
+
+  ma({ question: "Если граница области состоит из конечного числа непрерывных кривых, каждая из которых описывается одним из уравнений вида y=f(x) или x=g(y), то область называется",
+    options: ["непрерывной", "ограниченной", "квадрируемой", "прямоугольной"], correctIndex: 2 }), // c
+
+  ma({ question: "Как называется наибольшее расстояние между точками, лежащими на контуре замкнутой области?",
+    options: ["размер", "интеграл", "максимум", "диаметр"], correctIndex: 3 }), // d
+
+  ma({ question: "Спрямляемость линии означает, что для нее можно вычислить",
+    options: ["диаметр", "длину", "интеграл", "максимум"], correctIndex: 1 }), // b
+
+  ma({ type: "multiple", question: "Выбрать правильные повторные интегралы для двойного интеграла I=∬_{D}f(x,y)dxdy по области, изображенной на чертеже (не менее двух ответов)", image: MA_IMG.q83,
+    options: [
+      "I=\\in{1}{4}dy\\in{-2}{3}f(x,y)dx",
+      "I=\\in{-2}{1}dx\\in{3}{4}f(x,y)dy",
+      "I=\\in{-2}{3}dx\\in{1}{4}f(x,y)dy",
+      "I=\\in{-2}{3}dy\\in{1}{4}f(x,y)dx"
+    ],
+    correctIndexes: [0, 2] }), // a, c
+
+  ma({ question: "Вычислить \\in{0}{a}dx\\in{0}{3\\rt{}{x}}dy:",
+    options: ["2\\rt{}{a^{3}}", "\\rt{}{a^{3}}", "2\\rt{3}{a^{2}}", "\\rt{3}{a^{2}}"], correctIndex: 0 }), // a
+
+  ma({ question: "Двойной интеграл ∬_{D}dxdy равен",
+    options: [
+      "площади области D",
+      "площади цилиндрической поверхности, построенной на границе области D",
+      "объему параллелепипеда, построенного на области D",
+      "длине границы области D"
+    ], correctIndex: 0 }), // a
+
+  ma({ question: "Если кривая задана параметрически γ: x=x(t), y=y(t), α≤t≤β, то криволинейный интеграл 1-го рода вычисляется по формуле",
+    options: [
+      "\\in{γ}{}f(x,y)ds=\\in{α}{β}f(x(t),y(t))\\rt{}{1+(y'(t))^{2}}dt",
+      "\\in{γ}{}f(x,y)ds=\\in{α}{β}f(x(t),y(t))\\rt{}{(x'(t))^{2}+1}dt",
+      "\\in{γ}{}f(x,y)ds=\\in{α}{β}f(x(t),y(t))dt",
+      "\\in{γ}{}f(x,y)ds=\\in{α}{β}f(x(t),y(t))\\rt{}{(x'(t))^{2}+(y'(t))^{2}}dt"
+    ], correctIndex: 3 }), // d
+
+  ma({ question: "Найдите дифференциал дуги ds для кривой, заданной явно уравнением y=x^{2}+sin x",
+    options: ["ds=\\rt{}{1+(x^{2}+sin x)^{2}}dx", "ds=(x^{2}+sin x)dx", "ds=\\rt{}{1+(2x+cos x)^{2}}dx", "ds=(2x+cos x)dx"], correctIndex: 2 }), // c
+
+  ma({ question: "(Геометрический смысл криволинейного интеграла 1 рода) Величина интеграла \\in{γ}{}ds равна…",
+    options: [
+      "площади криволинейной трапеции, построенной на γ",
+      "длине γ",
+      "площади параллелограмма, построенного на γ",
+      "объему цилиндрического бруса"
+    ], correctIndex: 1 }), // b
+
+  // ВНИМАНИЕ: по ключу из файла верно a). Обычно от направления обхода зависит интеграл 2-го рода (вариант b); интеграл 1-го рода не зависит. Оставлен ключ из файла.
+  ma({ question: "Какой из двух типов интегралов: 1-го или 2-го рода зависит от направления интегрирования?",
+    options: [
+      "только криволинейный интеграл первого рода",
+      "только криволинейный интеграл второго рода",
+      "оба зависят",
+      "ни один из них не зависит"
+    ], correctIndex: 0 }), // a
+
+  // ВНИМАНИЕ: по ключу из файла верно a). Стандартное условие независимости от пути — ∂P/∂y=∂Q/∂x (вариант b). Оставлен ключ из файла.
+  ma({ question: "Для того чтобы криволинейный интеграл \\in{γ}{}Pdx+Qdy не зависел от пути интегрирования в односвязной области Ω, необходимо и достаточно, чтобы во всех точках этой области выполнялось равенство",
+    options: ["\\f{∂P}{∂x}=\\f{∂Q}{∂y}", "\\f{∂P}{∂y}=\\f{∂Q}{∂x}", "\\f{∂P}{∂x}=-\\f{∂Q}{∂y}", "\\f{∂P}{∂y}=-\\f{∂Q}{∂x}"], correctIndex: 0 }) // a
 );
 
 /* =========================================================
@@ -1859,7 +2330,7 @@ function el(tag, className, text) {
 }
 
 /* ---------- Мини-разметка формул ---------- */
-const RICH_CMDS = { f: 2, m: 1, d: 1, s: 1, v: 1, am: 2 };
+const RICH_CMDS = { f: 2, m: 1, d: 1, s: 1, v: 1, am: 2, rt: 2, 'in': 2, sm: 2, lm: 1 };
 
 function readGroup(s, i) { // s[i] === '{'; возвращает [содержимое, индекс после '}']
   let depth = 0;
@@ -1917,6 +2388,45 @@ function buildRich(name, args) {
     return sys;
   }
   if (name === 'v') { const v = el('span', 'vec'); v.appendChild(rich(args[0])); return v; }
+  if (name === 'rt') { // корень: \rt{показатель}{выражение}
+    const r = el('span', 'rad');
+    if (args[0]) { const idx = el('sup', 'rad-idx'); idx.appendChild(rich(args[0])); r.appendChild(idx); }
+    r.appendChild(el('span', 'rad-sign', '√'));
+    const body = el('span', 'rad-body'); body.appendChild(rich(args[1])); r.appendChild(body);
+    return r;
+  }
+  if (name === 'in') { // интеграл: \in{нижний}{верхний}
+    const w = el('span', 'intg');
+    w.appendChild(el('span', 'intg-sign', '∫'));
+    if (args[0] || args[1]) {
+      const lims = el('span', 'intg-lims');
+      const hi = el('span'); hi.appendChild(rich(args[1]));
+      const lo = el('span'); lo.appendChild(rich(args[0]));
+      lims.appendChild(hi); lims.appendChild(lo);
+      w.appendChild(lims);
+    }
+    return w;
+  }
+  if (name === 'sm') { // сумма: \sm{нижний}{верхний}
+    const w = el('span', 'undov');
+    const hi = el('span', 'undov-sm'); hi.appendChild(rich(args[1]));
+    const lo = el('span', 'undov-sm'); lo.appendChild(rich(args[0]));
+    w.appendChild(hi); w.appendChild(el('span', 'undov-sign', '∑')); w.appendChild(lo);
+    return w;
+  }
+  if (name === 'lm') { // предел: \lm{x→0}; несколько условий — через ;
+    const w = el('span', 'undov');
+    const lines = splitTop(args[0], ';');
+    const ghost = el('span', 'undov-sm ghost-lim'); // невидимая копия сверху — чтобы «lim» стоял на строке
+    const sub = el('span', 'undov-sm');
+    lines.forEach(l => {
+      const a = el('span'); a.appendChild(rich(l)); ghost.appendChild(a);
+      const b = el('span'); b.appendChild(rich(l)); sub.appendChild(b);
+    });
+    ghost.setAttribute('aria-hidden', 'true');
+    w.appendChild(ghost); w.appendChild(el('span', null, 'lim')); w.appendChild(sub);
+    return w;
+  }
   return document.createTextNode('');
 }
 
