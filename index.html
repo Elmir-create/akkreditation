@@ -3,111 +3,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Тренажёр тестов для подготовки к аккредитации: предметы, марафон и экзамен с разбором ошибок.">
+<meta name="theme-color" content="#0f6e6e">
 <title>Подготовка к аккредитации</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f6e6e'/%3E%3Cpath d='M18 33l9 9 19-20' stroke='white' stroke-width='7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
   :root {
     --bg: #eef3f2;
+    --bg-2: #e3ecea;
     --surface: #ffffff;
+    --surface-2: #f6f9f8;
     --ink: #14262b;
-    --muted: #5d7278;
-    --line: #d5e0de;
+    --muted: #5a6f75;
+    --line: #d3dfdc;
     --primary: #0f6e6e;
+    --primary-hover: #0b5a5a;
     --primary-ink: #ffffff;
     --primary-soft: #dcefed;
-    --ok: #1e8a4c;
+    --ok: #1d7f47;
     --ok-soft: #dff3e6;
-    --bad: #c23b3b;
+    --bad: #b93434;
     --bad-soft: #fbe4e4;
-    --hint: #b97a00;
+    --hint: #946100;
     --hint-soft: #fff1cf;
-    --radius: 16px;
-    --shadow: 0 6px 24px rgba(20, 38, 43, 0.08);
+    --dark-btn: #14262b;
+    --dark-btn-ink: #ffffff;
+    --radius: 18px;
+    --radius-sm: 12px;
+    --shadow: 0 1px 2px rgba(20, 38, 43, 0.05), 0 8px 24px rgba(20, 38, 43, 0.07);
+    --shadow-lift: 0 2px 4px rgba(20, 38, 43, 0.06), 0 14px 32px rgba(20, 38, 43, 0.12);
+    color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0e1a1d;
+    :root:not([data-theme="light"]) {
+      --bg: #0d181b;
+      --bg-2: #122125;
       --surface: #16272b;
-      --ink: #e8f1f0;
-      --muted: #93a9ae;
+      --surface-2: #1b2f34;
+      --ink: #e7f0ef;
+      --muted: #97acb1;
       --line: #2a4046;
       --primary: #3fb5b0;
-      --primary-ink: #06201f;
+      --primary-hover: #5cc8c3;
+      --primary-ink: #04201f;
       --primary-soft: #1b3a3c;
-      --ok: #55d08a;
-      --ok-soft: #1b3b2a;
-      --bad: #ff8585;
-      --bad-soft: #402124;
+      --ok: #5fd394;
+      --ok-soft: #173627;
+      --bad: #ff8a8a;
+      --bad-soft: #3d2023;
       --hint: #f0b84a;
-      --hint-soft: #3d3117;
-      --shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+      --hint-soft: #3a2f16;
+      --dark-btn: #e7f0ef;
+      --dark-btn-ink: #0d181b;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.3);
+      --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 14px 32px rgba(0, 0, 0, 0.45);
+      color-scheme: dark;
     }
   }
+  :root[data-theme="dark"] {
+    --bg: #0d181b;
+    --bg-2: #122125;
+    --surface: #16272b;
+    --surface-2: #1b2f34;
+    --ink: #e7f0ef;
+    --muted: #97acb1;
+    --line: #2a4046;
+    --primary: #3fb5b0;
+    --primary-hover: #5cc8c3;
+    --primary-ink: #04201f;
+    --primary-soft: #1b3a3c;
+    --ok: #5fd394;
+    --ok-soft: #173627;
+    --bad: #ff8a8a;
+    --bad-soft: #3d2023;
+    --hint: #f0b84a;
+    --hint-soft: #3a2f16;
+    --dark-btn: #e7f0ef;
+    --dark-btn-ink: #0d181b;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.3);
+    --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 14px 32px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
   * { box-sizing: border-box; }
   html, body { margin: 0; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     background: var(--bg);
     color: var(--ink);
-    font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
     min-height: 100vh;
-    padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
+    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+    -webkit-tap-highlight-color: transparent;
   }
-  #app { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; }
+  #app { max-width: 820px; margin: 0 auto; padding: 18px 16px 56px; }
 
-  h1 { font-size: 1.75rem; line-height: 1.2; margin: 8px 0 6px; letter-spacing: -0.01em; }
-  h2 { font-size: 1.15rem; margin: 0 0 12px; }
-  .lead { color: var(--muted); margin: 0 0 24px; max-width: 60ch; }
+  h1 { font-size: clamp(1.45rem, 4.6vw, 2rem); line-height: 1.15; margin: 0 0 6px; letter-spacing: -0.02em; }
+  h2 { font-size: 1.05rem; margin: 0 0 12px; letter-spacing: -0.005em; }
+  .lead { color: var(--muted); margin: 0; max-width: 62ch; }
 
   button { font: inherit; color: inherit; cursor: pointer; }
-  button:focus-visible, input:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
 
-  /* Menu */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  /* ---------- Шапка меню ---------- */
+  .hero {
+    display: flex; align-items: flex-start; gap: 14px; justify-content: space-between;
+    padding: 22px 22px 20px; margin-bottom: 18px;
+    background: linear-gradient(135deg, var(--primary) 0%, #11535f 100%);
+    color: #fff; border-radius: 22px; box-shadow: var(--shadow);
+  }
+  :root[data-theme="dark"] .hero { background: linear-gradient(135deg, #17595a 0%, #13343c 100%); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero { background: linear-gradient(135deg, #17595a 0%, #13343c 100%); } }
+  .hero h1 { color: #fff; }
+  .hero .lead { color: rgba(255, 255, 255, .82); }
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 12px;
+    font-size: .88rem; background: rgba(255, 255, 255, .14); color: #fff; font-variant-numeric: tabular-nums;
+  }
+  .icon-btn {
+    flex: none; width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, .28);
+    background: rgba(255, 255, 255, .12); color: #fff; display: grid; place-items: center; font-size: 1.1rem;
+  }
+  .icon-btn:hover { background: rgba(255, 255, 255, .22); }
+
+  .section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 22px 0 12px; flex-wrap: wrap; }
+  .section-head h2 { margin: 0; }
+  .search {
+    flex: 1 1 220px; max-width: 320px; font: inherit; color: var(--ink); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px 8px 38px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2393a9ae' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: 14px center;
+  }
+  @media (max-width: 560px) { .search { max-width: none; flex-basis: 100%; } }
+  .empty { color: var(--muted); padding: 18px; text-align: center; border: 1px dashed var(--line); border-radius: var(--radius); }
+
+  /* ---------- Карточки предметов ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .card {
+    position: relative; display: flex; flex-direction: column; background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+    transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); border-color: color-mix(in srgb, var(--accent, var(--primary)) 55%, var(--line)); }
   .card-btn {
-    text-align: left; background: var(--surface); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow);
-    transition: transform .12s ease, border-color .12s ease;
+    flex: 1; display: flex; gap: 12px; align-items: flex-start; text-align: left; width: 100%;
+    background: transparent; border: 0; padding: 16px 16px 14px;
   }
-  .card-btn:hover { transform: translateY(-2px); border-color: var(--primary); }
-  .card-wrap { display: flex; flex-direction: column; gap: 6px; }
-  .card-wrap .card-btn { flex: 1; }
+  .monogram {
+    flex: none; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+    font-weight: 700; font-size: .95rem; letter-spacing: -.02em;
+    color: var(--accent, var(--primary)); background: color-mix(in srgb, var(--accent, var(--primary)) 14%, transparent);
+  }
+  .card-body { min-width: 0; flex: 1; }
+  .card-btn .title { font-weight: 650; display: block; line-height: 1.3; }
+  .card-btn .meta { color: var(--muted); font-size: .88rem; display: block; margin-top: 2px; }
+  .best { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .best .bar { flex: 1; height: 5px; border-radius: 999px; background: var(--bg-2); overflow: hidden; }
+  .best .bar > i { display: block; height: 100%; border-radius: inherit; background: var(--accent, var(--primary)); }
   .exam-btn {
-    border: 0; border-radius: var(--radius); padding: 10px 14px; font-weight: 700;
-    background: var(--ink); color: var(--bg); box-shadow: var(--shadow);
+    border: 0; border-top: 1px solid var(--line); padding: 10px 16px; font-weight: 650; font-size: .9rem;
+    background: var(--surface-2); color: var(--ink); text-align: left; display: flex; justify-content: space-between; align-items: center;
   }
-  .exam-btn:hover { opacity: .9; }
-  .card-btn .title { font-weight: 600; display: block; }
-  .card-btn .meta { color: var(--muted); font-size: .9rem; }
+  .exam-btn:hover { background: var(--primary-soft); color: var(--primary); }
+
   .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .mode-btn {
-    border: 0; border-radius: var(--radius); padding: 20px 18px; text-align: left;
+    border: 0; border-radius: var(--radius); padding: 18px 18px; text-align: left;
     color: var(--primary-ink); background: var(--primary); box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 4px; transition: transform .14s ease, background .14s ease;
   }
-  .mode-btn.alt { background: var(--ink); color: var(--bg); }
-  .mode-btn .title { font-weight: 700; font-size: 1.1rem; display: block; }
+  .mode-btn:hover { transform: translateY(-2px); background: var(--primary-hover); }
+  .mode-btn.alt { background: var(--dark-btn); color: var(--dark-btn-ink); }
+  .mode-btn.alt:hover { background: var(--dark-btn); opacity: .92; }
+  .mode-btn .title { font-weight: 750; font-size: 1.08rem; letter-spacing: .01em; }
   .mode-btn .meta { opacity: .85; font-size: .9rem; }
-  @media (max-width: 520px) { .modes { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .modes { grid-template-columns: 1fr; } }
+  .footer-note { color: var(--muted); font-size: .85rem; margin-top: 22px; text-align: center; }
 
-  /* Quiz */
-  .topbar { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  /* ---------- Экран вопроса ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 12px;
+    margin: -18px -16px 12px; padding: 12px 16px; background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
   .ghost {
-    background: transparent; border: 1px solid var(--line); border-radius: 999px;
-    padding: 6px 14px; color: var(--muted);
+    flex: none; background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 14px; color: var(--muted); font-size: .92rem;
   }
   .ghost:hover { border-color: var(--primary); color: var(--ink); }
-  .mode-label { font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .counter { color: var(--muted); font-variant-numeric: tabular-nums; }
-  .progress { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
-  .progress > div { height: 100%; background: var(--primary); transition: width .25s ease; }
+  .mode-label { font-weight: 650; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .counter { color: var(--muted); font-variant-numeric: tabular-nums; font-size: .95rem; }
+  .progress { height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; margin-bottom: 16px; }
+  .progress > div { height: 100%; background: var(--primary); border-radius: inherit; transition: width .25s ease; }
 
   .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px 20px; }
+  @media (max-width: 480px) { .panel { padding: 18px 14px; border-radius: 16px; } }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
   .subject-tag {
     display: inline-block; background: var(--primary-soft); color: var(--primary);
-    border-radius: 999px; padding: 2px 12px; font-size: .85rem; margin-bottom: 12px;
+    border-radius: 999px; padding: 2px 12px; font-size: .82rem; font-weight: 600;
   }
-  .subject-tag + .subject-tag { margin-left: 6px; }
-  .subject-tag.lecture { background: var(--bg); color: var(--muted); }
-  .question { font-size: 1.15rem; font-weight: 600; margin: 0 0 6px; white-space: pre-line; line-height: 1.75; }
+  .subject-tag.lecture { background: var(--surface-2); color: var(--muted); font-weight: 500; }
+  .subject-tag.score { background: var(--surface-2); color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .subject-tag.score b { color: var(--ok); font-weight: 700; }
+  .subject-tag.score em { color: var(--bad); font-style: normal; font-weight: 700; }
+  .question { font-size: 1.12rem; font-weight: 600; margin: 0 0 6px; white-space: pre-line; line-height: 1.7; overflow-wrap: anywhere; }
+  .question.code-like { font-family: inherit; }
+  .context { white-space: pre-line; background: var(--surface-2); border: 1px solid var(--line); border-left: 4px solid var(--primary); border-radius: 12px; padding: 12px 14px; margin: 0 0 14px; font-size: .97rem; line-height: 1.65; overflow-wrap: anywhere; }
   .q-image { display: block; max-width: 100%; height: auto; margin: 10px 0; border-radius: 10px; border: 1px solid var(--line); background: #fff; }
   /* формулы */
   .frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 .15em; line-height: 1.25; }
@@ -135,86 +239,109 @@
   .undov-sign { font-size: 1.6em; line-height: 1; }
   .undov-sm { display: flex; flex-direction: column; align-items: center; font-size: .75em; }
   .undov-sm.ghost-lim { visibility: hidden; }
-  .instruction { color: var(--muted); font-size: .92rem; margin: 0 0 16px; }
+  .ovl { display: inline-block; border-top: 1.3px solid currentColor; line-height: 1.15; padding-top: 1px; }
+  .instruction { color: var(--muted); font-size: .9rem; margin: 6px 0 4px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .kbd-hint { font-size: .8rem; color: var(--muted); opacity: .85; }
+  kbd { font: inherit; font-size: .78rem; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 0 5px; background: var(--surface-2); }
+  @media (hover: none) { .kbd-hint { display: none; } }
 
-  .options { display: grid; gap: 10px; margin: 16px 0; }
+  .options { display: grid; gap: 10px; margin: 14px 0 16px; }
   .option {
-    display: flex; gap: 12px; align-items: flex-start; text-align: left;
-    background: var(--bg); border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px;
-    transition: border-color .12s ease, background .12s ease;
+    display: flex; gap: 12px; align-items: flex-start; text-align: left; width: 100%;
+    background: var(--surface-2); border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px;
+    transition: border-color .12s ease, background .12s ease, transform .08s ease;
+    overflow-wrap: anywhere;
   }
   .option:hover:not(:disabled) { border-color: var(--primary); }
+  .option:active:not(:disabled) { transform: scale(.995); }
   .option:disabled { cursor: default; }
+  .option .txt { padding-top: 1px; min-width: 0; }
   .option .mark {
-    flex: none; width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--line);
+    flex: none; width: 28px; height: 28px; border-radius: 9px; border: 2px solid var(--line);
     display: grid; place-items: center; font-weight: 700; font-size: .85rem; background: var(--surface);
   }
   .option.selected { border-color: var(--primary); background: var(--primary-soft); }
   .option.selected .mark { background: var(--primary); border-color: var(--primary); color: var(--primary-ink); }
   .option.correct { border-color: var(--ok); background: var(--ok-soft); }
-  .option.correct .mark { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .option.correct .mark { background: var(--ok); border-color: var(--ok); color: var(--surface); }
   .option.wrong { border-color: var(--bad); background: var(--bad-soft); }
-  .option.wrong .mark { background: var(--bad); border-color: var(--bad); color: #fff; }
+  .option.wrong .mark { background: var(--bad); border-color: var(--bad); color: var(--surface); }
   .option.hint { border-color: var(--hint); background: var(--hint-soft); }
-  .option.missed { border-style: dashed; border-color: var(--ok); }
+  .option.missed { border-style: dashed; }
 
-  .options.with-images { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+  .options.with-images { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
   .option .opt-img { display: block; max-width: 100%; height: auto; background: #fff; border-radius: 8px; padding: 4px; }
-  .ovl { display: inline-block; border-top: 1.3px solid currentColor; line-height: 1.15; padding-top: 1px; }
   .mini-table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
   .mini-table th, .mini-table td { padding: 2px 10px 2px 0; text-align: left; font-weight: 400; }
   .mini-table th { font-weight: 700; padding-right: 14px; }
+  .table-wrap { overflow-x: auto; }
   .q-table { border-collapse: collapse; margin: 6px 0 10px; font-variant-numeric: tabular-nums; }
   .q-table th, .q-table td { border: 1px solid var(--line); padding: 6px 14px; text-align: center; }
-  .q-table th { background: var(--bg); }
+  .q-table th { background: var(--surface-2); }
   .notice span, .review-item .a { white-space: pre-line; }
-  .review-item img { display: block; background: #fff; border-radius: 8px; padding: 4px; margin-top: 6px; max-width: 100%; }
-  .legend { margin: 0 0 14px; padding: 12px 14px 12px 34px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; }
-  .legend li { margin: 2px 0; }
-  .match-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border: 2px solid var(--line); border-radius: 12px; margin-bottom: 8px; background: var(--bg); }
+  .review-item img { display: block; background: #fff; border-radius: 8px; padding: 4px; margin-top: 6px; max-width: min(100%, 320px); }
+  .legend { margin: 6px 0 14px; padding: 12px 14px 12px 34px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; }
+  .legend li { margin: 3px 0; }
+  .match-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border: 2px solid var(--line); border-radius: 12px; margin-bottom: 8px; background: var(--surface-2); }
   .match-row.correct { border-color: var(--ok); background: var(--ok-soft); }
   .match-row.wrong { border-color: var(--bad); background: var(--bad-soft); }
-  .match-row select { font: inherit; color: var(--ink); background: var(--surface); border: 2px solid var(--line); border-radius: 8px; padding: 6px 8px; min-width: 64px; }
+  .match-row select { font: inherit; color: var(--ink); background: var(--surface); border: 2px solid var(--line); border-radius: 8px; padding: 6px 8px; min-width: 68px; }
   .match-row .fix { grid-column: 1 / -1; color: var(--ok); font-size: .92rem; }
   .text-answer {
-    width: 100%; font: inherit; color: var(--ink); background: var(--bg);
-    border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 16px 0;
+    width: 100%; font: inherit; font-size: 1.05rem; color: var(--ink); background: var(--surface-2);
+    border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px; margin: 14px 0 16px;
   }
+  .text-answer:focus { border-color: var(--primary); outline: none; }
   .text-answer.correct { border-color: var(--ok); background: var(--ok-soft); }
   .text-answer.wrong { border-color: var(--bad); background: var(--bad-soft); }
 
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 4px; }
   .btn {
-    border: 0; border-radius: 12px; padding: 12px 20px; font-weight: 600;
-    background: var(--primary); color: var(--primary-ink);
+    border: 0; border-radius: 12px; padding: 12px 20px; font-weight: 650;
+    background: var(--primary); color: var(--primary-ink); transition: background .12s ease, opacity .12s ease;
   }
+  .btn:hover:not(:disabled) { background: var(--primary-hover); }
   .btn:disabled { opacity: .45; cursor: not-allowed; }
   .btn.secondary { background: transparent; border: 1px solid var(--line); color: var(--ink); }
-  .btn.hint-btn { background: var(--hint-soft); color: var(--hint); border: 1px solid var(--hint); }
+  .btn.secondary:hover:not(:disabled) { background: var(--surface-2); border-color: var(--primary); }
+  .btn.hint-btn { background: var(--hint-soft); color: var(--hint); border: 1px solid color-mix(in srgb, var(--hint) 50%, transparent); }
+  .btn.hint-btn:hover:not(:disabled) { background: var(--hint-soft); border-color: var(--hint); }
   .spacer { flex: 1; }
+  @media (max-width: 480px) {
+    .actions .btn { flex: 1 1 auto; }
+    .actions .spacer { display: none; }
+  }
 
-  .notice { border-radius: 12px; padding: 12px 14px; margin: 14px 0 0; }
-  .notice.ok { background: var(--ok-soft); color: var(--ok); }
-  .notice.bad { background: var(--bad-soft); color: var(--bad); }
-  .notice.hint { background: var(--hint-soft); color: var(--hint); }
-  .notice strong { display: block; }
+  .notice { border-radius: 12px; padding: 12px 14px; margin: 14px 0 14px; border: 1px solid transparent; }
+  .notice.ok { background: var(--ok-soft); color: var(--ok); border-color: color-mix(in srgb, var(--ok) 30%, transparent); }
+  .notice.bad { background: var(--bad-soft); color: var(--bad); border-color: color-mix(in srgb, var(--bad) 30%, transparent); }
+  .notice.hint { background: var(--hint-soft); color: var(--hint); border-color: color-mix(in srgb, var(--hint) 30%, transparent); }
+  .notice strong { display: block; margin-bottom: 2px; }
   .notice span { color: var(--ink); }
+  .note-box { margin-top: 10px; padding-top: 10px; border-top: 1px dashed color-mix(in srgb, currentColor 35%, transparent); color: var(--ink); font-size: .93rem; }
+  .note-box b { color: var(--muted); font-weight: 650; }
 
-  /* Result */
+  /* ---------- Результат ---------- */
   .result { text-align: center; }
-  .percent { font-size: 3.5rem; font-weight: 700; line-height: 1; margin: 6px 0; font-variant-numeric: tabular-nums; }
-  .verdict { display: inline-block; border-radius: 999px; padding: 4px 16px; font-weight: 600; margin-bottom: 18px; }
+  .result h1 { font-size: 1.35rem; }
+  .ring { position: relative; width: 150px; height: 150px; margin: 14px auto 10px; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring .track { stroke: var(--line); }
+  .ring .val { transition: stroke-dashoffset .6s ease; }
+  .ring .pct { position: absolute; inset: 0; display: grid; place-items: center; font-size: 2.3rem; font-weight: 750; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .verdict { display: inline-block; border-radius: 999px; padding: 4px 16px; font-weight: 650; margin-bottom: 16px; }
   .verdict.pass { background: var(--ok-soft); color: var(--ok); }
   .verdict.fail { background: var(--bad-soft); color: var(--bad); }
-  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
-  .stat { background: var(--bg); border-radius: 12px; padding: 14px; }
-  .stat b { display: block; font-size: 1.6rem; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 8px 0 18px; }
+  .stat { background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px; color: var(--muted); font-size: .9rem; }
+  .stat b { display: block; font-size: 1.6rem; color: var(--ink); font-variant-numeric: tabular-nums; }
   .stat.ok b { color: var(--ok); }
   .stat.bad b { color: var(--bad); }
-  .review { text-align: left; margin-top: 24px; }
+  .review { text-align: left; margin-top: 26px; }
   .review-item { border-top: 1px solid var(--line); padding: 12px 0; }
-  .review-item .q { font-weight: 600; margin: 0 0 4px; }
+  .review-item .q { font-weight: 600; margin: 0 0 6px; white-space: pre-line; }
   .review-item .a { margin: 0; color: var(--ok); }
+  .review-item .n { margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
   .center { justify-content: center; }
   .note { color: var(--muted); font-size: .9rem; margin-top: 14px; }
 
@@ -257,7 +384,7 @@ const data = [
 
   { subject: SUBJECT_BZD, type: "open",
     question: "Закончите фразу: «Населенные пункты и объекты народного хозяйства, подвергшиеся непосредственному воздействию бактериологического оружия, создающего источник распространения инфекционных заболеваний, называются...».",
-    answerText: "Очаги химического и бактериологического поражения", accept: ["химическ", "бактериологическ"] },
+    answerText: "Очаг бактериологического (биологического) поражения", accept: ["бактериологическ", "биологическ"] },
 
   { subject: SUBJECT_BZD, type: "open",
     question: "Приведите название сигнала, используемого органами гражданской обороны и чрезвычайных ситуаций (ГОЧС) для привлечения внимания населения к речевой информации об опасностях, возникших за счет ЧС мирного или военного времени.",
@@ -312,9 +439,7 @@ const data = [
     options: ["Полить ожоговую поверхность холодной водой, накрыть стерильной салфеткой и туго забинтовать", "Вскрыть пузыри, очистить ожоговую поверхность от остатков одежды, накрыть стерильной салфеткой (не бинтовать), по возможности приложить холод, поить пострадавшего водой", "Пузыри не вскрывать, остатки одежды с обожженной поверхности не удалять, рану накрыть стерильной салфеткой (не бинтовать), по возможности приложить холод и поить пострадавшего водой"],
     correctIndex: 2 }, // в
 
-  // ВНИМАНИЕ: в рукописном ответе указано «в, б». Вариант «б» (укрытие у одиноко стоящего дерева)
-  // опасен при грозе, а вариант «д» виден на следующем листе — правильными оставлены «в» и «д».
-  // Если по ключу ФОС иначе — измените correctIndexes ([2, 4] = в, д; [2, 1] = в, б).
+  // По рукописному ключу: «в, д».
   { subject: SUBJECT_BZD, type: "multiple",
     question: "Чтобы избежать удара молнии, лучше всего:",
     options: ["спрятаться под скрытым навесом", "укрыться возле одиноко стоящего дерева с раскидистой кроной", "спрятаться в сухой яме, канаве, овраге", "находиться в воде, а не на суше", "находиться на суше, а не в воде"],
@@ -419,7 +544,7 @@ data.push(
   /* ---- Лекция 6 ---- */
   openQ(6, "Каждое чистое соединение независимо от способов... имеет один и тот же состав.", "получения", ["получени"]),
   openQ(6, "Минимальная частица вещества, образованная двумя и более атомами –...", "молекула", ["молекул"]),
-  sqQ(6, "Периодическая система Менделеева была впервые опубликована:", ["В 1867 году.", "В 1860 году.", "В 1808 году.", "В 1812 году.", "В 1866 году."], 0),
+  Object.assign(sqQ(6, "Периодическая система Менделеева была впервые опубликована:", ["В 1867 году.", "В 1860 году.", "В 1808 году.", "В 1812 году.", "В 1866 году."], 0), { note: "В лекции и в действительности — 1869 год, но такого варианта нет; выбран ближайший (1867)." }),
   sqQ(6, "Закон сохранения массы веществ при химических реакциях был открыт:", ["А. де Лавуазье.", "Дж. Пристли.", "Д.И. Менделеевым.", "Дж. Дальтоном.", "С. Аррениусом."], 0),
   sqQ(6, "Большую часть массы органических веществ составляют:", ["Углекислый газ и вода.", "Углерод и водород.", "Кислород и азот.", "Углерод и кислород.", "Вода и белки."], 3),
   sqQ(6, "В античности господствовал метод интерпретации:", ["Наивно-философский.", "Объяснение посредством верховных сил.", "Выработка научной атомно-молекулярной теории.", "Господство атомно-молекулярной теории.", "Квантовая теория."], 0),
@@ -433,11 +558,11 @@ data.push(
   sqQ(7, "Понятие антропогенеза включает в себя:", ["Происхождение всех приматов.", "Происхождение человекообразных обезьян и человека.", "Происхождение человека разумного.", "Эволюционную историю рода Homo и вида Homo sapiens.", "Историю происхождения человеческих рас и расселения человека по всей Земле."], 3),
   sqQ(7, "Считается, что человек современного типа появился примерно:", ["1,5 млн. лет назад.", "500-750 тыс. лет назад.", "5-6 тыс. лет назад.", "15-20 тыс. лет назад.", "200-40 тыс. лет назад."], 4),
   sqQ(7, "В классическом варианте эволюционной гипотезы непосредственным предком человека разумного считался:", ["Питекантроп.", "Синантроп.", "Неандерталец.", "Австралопитек.", "Презинджантроп."], 2),
-  sqQ(7, "По современным представлениям, впервые овладели огнем:", ["Зинджантропы.", "Неандертальцы.", "Кроманьонцы.", "Питекантропы.", "Синантропы."], 4),
+  Object.assign(sqQ(7, "По современным представлениям, впервые овладели огнем:", ["Зинджантропы.", "Неандертальцы.", "Кроманьонцы.", "Питекантропы.", "Синантропы."], 4), { note: "Обратите внимание: в тексте лекции 7 «покорение огня» отнесено к неандертальцам. По современным данным огнём впервые пользовались синантропы (Homo erectus)." }),
   sqQ(7, "Гуморальная регуляция осуществляется:", ["Железами наружной секреции.", "Нервными клетками.", "Клетками-спутниками.", "Печенью.", "Железами внутренней секреции."], 4),
   sqQ(7, "Важнейшим отличием человека от приматов является:", ["Отсутствие хвоста и редуцированный волосяной покров.", "Преобладание мозгового черепа над лицевым и редукция жевательных мышц.", "Наличие таких форм высшей нервной деятельности, как сознание, мышление, репродуктивное и творческое воображение.", "Способность преобразовывать среду обитания.", "Относительно высокая экологическая толерантность."], 2),
   sqQ(7, "Белое мозговое вещество представляет собой:", ["Скопление аксонов.", "Скопление продуктов жизнедеятельности нервных клеток.", "Скопление нервных клеток особого строения.", "Скопление секреторных клеток.", "Скопление тел нейронов."], 0),
-  sqQ(7, "Расщепление белков происходит:", ["В желудке.", "В толстом кишечнике.", "В печени.", "В тонком кишечнике.", "В слепой кишке."], 3)
+  Object.assign(sqQ(7, "Расщепление белков происходит:", ["В желудке.", "В толстом кишечнике.", "В печени.", "В тонком кишечнике.", "В слепой кишке."], 3), { note: "Расщепление белков начинается в желудке (пепсин), а до аминокислот завершается в тонком кишечнике. В некоторых ключах ответ — «в желудке»." })
 );
 
 
@@ -474,10 +599,10 @@ data.push(
     options: ["2∉Z", "-2∈N", "\\rt{}{2}∉R", "\\rt{}{2}∈R"],
     correctIndex: 3 }), // 2 d
 
-  // ВНИМАНИЕ: в исходном файле ни один вариант не является подмножеством A (в A нет −6, −8, −9, 4); ключ взят из файла: b.
   moi({ question: "Выберите множество, которое является подмножеством множества A={-3, -4, 6, 8, 9}:",
     options: ["{6, -8}", "{9, 8, -6}", "{-3, -9, 6}", "{9, 4, 6}"],
-    correctIndex: 1 }), // 3 b
+    correctIndex: 1,
+    note: "Строго говоря, ни один вариант не подходит (в A нет −8, −6, −9 и 4) — скорее всего, в файле опечатка «−6» вместо «6». Ответ по ключу банка: {9, 8, -6}." }), // 3 b
 
   moi({ question: "Выберите чертеж, на котором с помощью диаграмм Эйлера-Венна изображено взаимное соотношение множеств A, B и C, если A - множество целых чисел; B - множество натуральных чисел; C - множество отрицательных чисел.",
     options: [{ img: MOI_IMG.q4a }, { img: MOI_IMG.q4b }, { img: MOI_IMG.q4c }, { img: MOI_IMG.q4d }],
@@ -500,8 +625,9 @@ data.push(
     correctIndex: 3 }), // 8 d
 
   moi({ question: "Определите соотношение между множествами, если А – натуральных четных чисел, В – множество натуральных чисел, которые делятся на 3",
-    options: ["А равно В", "А и В пересекаются", "А делит В", "А и В не пересекаются"],
-    correctIndex: 1 }), // 9 b
+    options: ["А равно В", "А подмножество В", "А делит В", "B подмножество A"],
+    correctIndex: 3,
+    note: "Варианты восстановлены как в банке, ответ — по ключу («B подмножество A»). Математически ни один вариант не верен: множества лишь пересекаются (6, 12, 18, …)." }), // 9 d
 
   // В исходном файле условие обрезано («(А \ этих множеств»); восстановлено «(А \ В)».
   moi({ question: "На факультете учатся студенты, получающие стипендию и студенты, не получающие стипендию. Пусть А – множество всех студентов факультета; В – множество студентов факультета, получающих стипендию. Тогда, разностью (А \\ В) этих множеств будет:",
@@ -836,7 +962,8 @@ data.push(
   ma({ type: "multiple",
     question: "Какие из перечисленных последовательностей не ограничены сверху? (не менее двух ответов)",
     options: ["x_{n}=\\f{1}{n}", "x_{n}=2^{n}", "x_{n}=n^{2}+1", "x_{n}=\\f{n+1}{n}"],
-    correctIndexes: [1, 2] }), // 3 b, c
+    correctIndexes: [1, 2],
+    note: "В исходном файле второй вариант записан как x_{n}=2^{(-1)^{n}} — такая последовательность ограничена (значения 2 и 1/2), а по ключу нужно два ответа. Поэтому здесь он заменён на 2^{n}; верные ответы — 2^{n} и n^{2}+1." }), // 3 b, c
 
   ma({ question: "Числовая последовательность называется сходящейся, если:",
     options: ["она ограничена", "она имеет конечный предел", "она имеет бесконечный предел", "она не имеет предела"],
@@ -979,12 +1106,13 @@ data.push(
     options: ["\\f{1}{3}", "\\f{2}{3}", "1", "3"],
     correctIndex: 0 }), // 36 a
 
-  // Ключ не отмечен в файле — определён по содержанию.
+  // В файле ключом отмечена только пара b–3; остальное — по содержанию.
   ma({ type: "match",
     question: "Какие методы применяются при вычислении заданных интегралов? (ответ записать в виде комбинации «буква-число»):",
-    left: ["\\in{0}{π}x sin(2x+1)dx", "\\in{1}{3}\\f{dx}{1+x^{2}}", "\\in{1}{e}\\f{ln x}{x}dx"],
+    left: ["\\in{0}{π}x sin(2x+1)dx", "\\in{1}{3}\\f{dx}{1+x^{2}}", "\\in{1}{e}x^{2}ln x dx"],
     right: ["интегрирование по частям", "замена переменной", "непосредственное интегрирование (применение формул и табличных интегралов)"],
-    correctMap: [0, 2, 1] }), // 37
+    correctMap: [0, 2, 0],
+    note: "Интегралы с x·sin(2x+1) и x^{2}ln x оба берутся по частям (u = x и u = ln x), а \\f{dx}{1+x^{2}} — табличный (arctg x). В файле ключом подтверждена только последняя пара." }), // 37
 
   ma({ question: "Выбрать формулу для вычисления площади выделенной области",
     image: MA_IMG.q38,
@@ -1113,7 +1241,8 @@ data.push(
 
   ma({ question: "Если радиус сходимости степенного ряда \\sm{n=0}{∞}a_{n}(x-3)^{n} равен R=2, то интервал сходимости этого ряда",
     options: ["(-2, 2)", "(-3, 3)", "(1, 5)", "(5, 7)"],
-    correctIndex: 2 }), // 66 c
+    correctIndex: 2,
+    note: "Центр ряда x = 3, поэтому интервал (3 − 2; 3 + 2) = (1; 5). В ключе банка ошибочно отмечен вариант (−2; 2)." }), // 66 c
 
   ma({ question: "Совокупность пар (x,y) значений x и y, при которых определено значение функции z=f(x,y) называется",
     options: ["областью определения функции z=f(x,y)", "графиком функции z=f(x,y)", "частной производной функции z=f(x,y)", "областью значений функции z=f(x,y)"],
@@ -1137,6 +1266,7 @@ data.push(
 
   ma({ type: "open",
     numeric: 7, answerText: "7",
+    note: "2 − 2·2·(−1) + (−1)^{2} = 2 + 4 + 1 = 7. В банке указан ответ 5 — это ошибка ключа.",
     question: "Вычислите предел \\lm{x→2;y→-1}(x-2xy+y^{2})=" }), // 72
 
   ma({ question: "При вычислении частной производной по x от функции z=f(x,y) предполагается, что y – это",
@@ -1207,7 +1337,8 @@ data.push(
 
   ma({ question: "Какой из двух типов интегралов: 1-го или 2-го рода зависит от направления интегрирования?",
     options: ["только криволинейный интеграл первого рода", "только криволинейный интеграл второго рода", "оба зависят", "ни один из них не зависит"],
-    correctIndex: 0 }), // 90 a
+    correctIndex: 1,
+    note: "При смене направления интеграл 2-го рода меняет знак, а интеграл 1-го рода (по длине дуги) не меняется. В ключе банка ошибочно отмечен вариант «только первого рода»." }), // 90
 
   ma({ question: "Для того чтобы криволинейный интеграл \\in{γ}{}Pdx+Qdy не зависел от пути интегрирования в односвязной области Ω, необходимо и достаточно, чтобы во всех точках этой области выполнялось равенство",
     options: ["\\f{∂P}{∂x}=\\f{∂Q}{∂y}", "\\f{∂P}{∂y}=\\f{∂Q}{∂x}", "\\f{∂P}{∂x}=-\\f{∂Q}{∂y}", "\\f{∂P}{∂y}=-\\f{∂Q}{∂x}"],
@@ -1246,7 +1377,8 @@ data.push(
     options: ["Кибербезопасность", "Социальные сети", "Цифровая грамотность", "Информационная аналитика"], correctIndex: 3 }),
 
   cifra({ question: "Сколько дней в среднем занимает формирование привычки:",
-    options: ["18 дней", "66 дней", "254 дня"], correctIndex: 0 }),
+    options: ["18 дней", "66 дней", "254 дня"], correctIndex: 1,
+    note: "По исследованию Ф. Лалли: в среднем 66 дней (разброс — от 18 до 254 дней)." }),
 
   cifra({ question: "Что означает термин «цифровая грамотность»?",
     options: ["Способность эффективно использовать цифровые технологии и ресурсы", "Исследование истории компьютерных технологий", "Разработка программного обеспечения", "Навыки работы с аналоговыми технологиями"], correctIndex: 0 }),
@@ -1264,7 +1396,7 @@ data.push(
     options: ["Сектора Шульте", "Квадранты Шульте", "Таблицы Шульте"], correctIndex: 2 }),
 
   cifra({ question: "Передача информации сквозь пространство и время, знаний от учителя ученику, от поколения к поколению это:",
-    options: ["Социальная трансмиссия", "Социальная передача информации", "Социальная конвергенция", "Культурная трансмиссия"], correctIndex: 0 }),
+    options: ["Социальная трансмиссия", "Социальная передача информации", "Социальная конвергенция", "Культурная трансмиссия"], correctIndex: 3 }),
 
   cifra({ question: "Какая техника тайм-менеджмента, активно применявшаяся 34-м президентом США и названная в его честь, популярна и в настоящее время:",
     options: ["Матрица Эйзенхауэра", "Круг Эйзенхауэра", "Пирамида Эйзенхауэра"], correctIndex: 0 }),
@@ -1321,7 +1453,7 @@ data.push(
     options: ["Собак и мышей", "Слонов и мышей", "Слонов и лягушек"], correctIndex: 2 }),
 
   cifra({ question: "Что такое теория самодетерминации:",
-    options: ["Направление психологии, изучающее влияние окружения на человека", "Область психологии, изучающая рефлексию", "Макро-теория психологии, изучающая мотивации человека"], correctIndex: 0 }),
+    options: ["Направление психологии, изучающее влияние окружения на человека", "Область психологии, изучающая рефлексию", "Макро-теория психологии, изучающая мотивации человека"], correctIndex: 2 }),
 
   cifra({ question: "Характеристики информации:",
     options: ["Объективность, достоверность, полнота, актуальность, понятность, релевантность", "Объективность, достоверность, полнота, цитируемость, понятность, релевантность", "Объективность, интересность, полнота, актуальность, понятность, релевантность", "Объективность, полнота, достоверность, своевременность, релевантность"], correctIndex: 0 }),
@@ -1365,16 +1497,17 @@ data.push(
     options: ["file()", "read_file()", "open()", "fopen()"], correctIndex: 2 }),
 
   prog({ question: "Как получить длину строки 's'?",
-    options: ["length(s)", "s.length()", "len(s)", "size(s)"], correctIndex: 0 }),
+    options: ["length(s)", "s.length()", "len(s)", "size(s)"], correctIndex: 2 }),
 
   prog({ question: "Что будет выведено после выполнения следующего кода:\nfor i in range(3):\n    if i < 1:\n        print(i)\n    else:\n        print(i)\n        break",
-    options: ["ошибка", "0 1", "0 1 2"], correctIndex: 2 }),
+    options: ["ошибка", "0 1", "0 1 2"], correctIndex: 1,
+    note: "i = 0 → печатается 0; i = 1 → печатается 1 и срабатывает break, до 2 цикл не доходит." }),
 
   prog({ question: "Что выведет следующий код:\na = 3\na = \"foo\"\nif a / 2 == 1 else 2\na = a + a\nprint(a)",
     options: ["foofoo", "6", "ошибка", "4"], correctIndex: 2 }),
 
   prog({ type: "multiple", question: "Как проверить, что переменная x является экземпляром класса int?",
-    options: ["int", "type(x)", "x is int", "isinstance(x, int)"], correctIndexes: [0, 3] }),
+    options: ["type(x) == int", "type(x)", "x is int", "isinstance(x, int)"], correctIndexes: [0, 3] }),
 
   prog({ question: "Каким образом в Python оформляется комментарий?",
     options: ["# комментарий", "\"\"", "// комментарий", "/* комментарий */"], correctIndex: 0 }),
@@ -1386,7 +1519,8 @@ data.push(
     options: ["io", "sys", "glob", "shutil"], correctIndex: 3 }),
 
   prog({ type: "multiple", question: "Как создать копию списка a с помощью среза?",
-    options: ["list(a)", "a[:]", "b", "Все варианты верны", "a.copy()"], correctIndexes: [0, 1, 4] }),
+    options: ["list(a)", "a[:]", "b = a", "Все варианты верны", "a.copy()"], correctIndexes: [0, 1, 4],
+    note: "Именно срезом копию делает a[:]; list(a) и a.copy() дают такую же копию и по ключу тоже засчитываются. b = a копию не создаёт — это вторая ссылка на тот же список." }),
 
   prog({ type: "order",
     question: "Расположите в правильном порядке шаги для создания и использования простой функции:",
@@ -1403,22 +1537,23 @@ data.push(
   prog({ question: "Сборник подпрограмм или объектов в Python для решения близких по тематике задач:",
     options: ["модуль", "несколько модулей", "нет правильных ответов", "библиотека"], correctIndex: 0 }),
 
-  // ВНИМАНИЕ: технически верный метод удаления по значению — remove(), но ключ ФОС требует del().
   prog({ question: "Какой метод удаляет элемент по значению из списка?",
-    options: ["remove()", "pop()", "clear()", "del()"], correctIndex: 3 }),
+    options: ["remove()", "pop()", "clear()", "del()"], correctIndex: 0,
+    note: "По значению удаляет list.remove(x). del — это оператор, он удаляет по индексу (del a[i]). В ключе ФОС отмечен del()." }),
 
   prog({ question: "Что делает флаг '+' в режиме открытия файла (например, 'r+')?",
     options: ["Создает файл, если его не существует", "Указывает на бинарный режим", "Добавляет символ новой строки в конец", "Открывает файл для обновления (чтения и записи)"], correctIndex: 3 }),
 
   prog({ question: "Что выполнит данный код после импорта random?\nlst = []\nfor _ in range(10):\n    lst.append(random.randint(-10, 10))",
-    options: ["Сгенерирует список из 10 случайных чисел в диапазоне от -10 до 9", "Создаст пустой строковый массив и инициализирует его", "Сгенерирует список из 10 случайных чисел", "Вернет ошибку"], correctIndex: 3 }),
+    options: ["Сгенерирует список из 10 случайных чисел в диапазоне от -10 до 9", "Создаст пустой строковый массив и инициализирует его", "Сгенерирует список из 10 случайных чисел", "Вернет ошибку"], correctIndex: 2,
+    note: "randint(-10, 10) включает обе границы, поэтому вариант «от -10 до 9» неверен. Ошибки нет — модуль random импортирован." }),
 
   prog({ question: "Что будет выведено после выполнения следующего кода:\ntext = 'hello'\nprint(text[3:1000])",
     options: ["lo", "hel", "hello", "o"], correctIndex: 0 }),
 
-  // ВНИМАНИЕ: в Python кортеж (tuple) на самом деле неизменяемый; здесь оставлен вариант ключа ФОС.
   prog({ question: "Кортеж – это...",
-    options: ["статичный список", "массив списков", "список списков", "изменяемый список"], correctIndex: 3 }),
+    options: ["статичный список", "массив списков", "список списков", "изменяемый список"], correctIndex: 0,
+    note: "Кортеж (tuple) неизменяемый, то есть «статичный список». В ключе ФОС ошибочно отмечен «изменяемый список»." }),
 
   prog({ question: "Что будет выведено после выполнения следующего кода:\ns = \"hello\"\nprint(s[1:4])",
     options: ["hel", "lo", "ello", "ell"], correctIndex: 3 }),
@@ -1442,7 +1577,7 @@ data.push(
     options: ["Он сжимает файл.", "Он блокирует доступ к файлу другим программам.", "Он ускоряет чтение файла.", "Он автоматически вызывает метод .close() при выходе из блока."], correctIndex: 3 }),
 
   prog({ question: "Как создать анонимную (лямбда) функцию для возведения числа в квадрат?",
-    options: ["func(x): x2", "def x: x2", "lambda x^2", "lambda x: x2"], correctIndex: 3 }),
+    options: ["func(x): x**2", "def x: x**2", "lambda x^2", "lambda x: x**2"], correctIndex: 3 }),
 
   prog({ question: "Что будет выведено после выполнения следующего кода:\na, b = 0, 1\nwhile b < 5:\n    print(b, end=' ')\n    a, b = b, a + b",
     options: ["1 1 2 3", "1 2 3 4", "1 1 2", "ошибка"], correctIndex: 0 }),
@@ -1453,8 +1588,9 @@ data.push(
   prog({ question: "Что такое «list comprehension»?",
     options: ["Способ объявления кортежа", "Способ создания нового списка на основе существующего в одну строку", "Метод для удаления дубликатов", "Встроенная функция сортировки"], correctIndex: 1 }),
 
-  prog({ question: "Укажите модули, входящие в стандартный набор Python:",
-    options: ["PIL", "math", "cmath", "numpy"], correctIndex: 2 }),
+  prog({ type: "multiple", question: "Укажите модули, входящие в стандартный набор Python:",
+    options: ["PIL", "math", "cmath", "numpy"], correctIndexes: [1, 2],
+    note: "math и cmath входят в стандартную библиотеку; PIL (Pillow) и numpy устанавливаются отдельно через pip." }),
 
   prog({ question: "Какой метод объекта файла считывает все содержимое файла целиком в одну строку?",
     options: [".fetchall()", ".readline()", ".readlines()", ".read()"], correctIndex: 3 }),
@@ -1471,11 +1607,12 @@ data.push(
     correctMap: [0, 1, 2, 3, 4] }),
 
   prog({ question: "Что будет выведено в результате выполнения следующего кода при подключении модуля re:\nstring = \"This is a simple test message for test\"\nfound = re.findall(r'test', string)\nprint(found)",
-    options: ["ошибка", "'test'", "test", "['test', 'test']"], correctIndex: 0 }),
+    options: ["ошибка", "'test'", "test", "['test', 'test']"], correctIndex: 3,
+    note: "re.findall возвращает список всех совпадений: слово test встречается дважды." }),
 
-  // ВНИМАНИЕ: технически верно x is None, но ключ ФОС требует вариант «None».
   prog({ question: "Как проверить, что переменная x равна None?",
-    options: ["None", "x", "x !", "x is None"], correctIndex: 0 }),
+    options: ["x == None", "x = None", "x != None", "x is None"], correctIndex: 3,
+    note: "Правильно и по PEP 8 — x is None. Сравнение x == None тоже сработает, но так писать не рекомендуется; в ключе ФОС оно отмечено как верное." }),
 
   prog({ type: "order",
     question: "Определите правильный порядок действий для безопасного чтения содержимого текстового файла:",
@@ -1493,7 +1630,7 @@ data.push(
     options: ["d.values()", "d.items()", "d.get()", "d.keys()"], correctIndex: 3 }),
 
   prog({ question: "Как работает оператор is в сравнении объектов?",
-    options: ["Сравнивает значения.", "Сравнивает типы.", "Сравнивает размеры памяти.", "Сравнивает идентификаторы объектов (id)."], correctIndex: 2 }),
+    options: ["Сравнивает значения.", "Сравнивает типы.", "Сравнивает размеры памяти.", "Сравнивает идентификаторы объектов (id)."], correctIndex: 3 }),
 
   prog({ question: "Каким образом можно преобразовать строку в число типа int?",
     options: ["str(10)", "float('10')", "to_int('10')", "int('10')"], correctIndex: 3 }),
@@ -1512,7 +1649,8 @@ data.push(
     options: ["Простые", "Выходные", "Входные", "Расчетные"], correctIndexes: [1, 2, 3] }),
 
   prog({ question: "Какой метод используется для форматирования строк в современном Python?",
-    options: ["%", ".format()", "f-строки (\"...\")", "Все перечисленные"], correctIndex: 1 }),
+    options: ["%", ".format()", "f-строки (f\"...\")", "Все перечисленные"], correctIndex: 2,
+    note: "Современный способ (Python 3.6+) — f-строки. % и .format() тоже работают, но считаются более старыми." }),
 
   prog({ question: "Определить значение выражения: 7 // 3 + 7 // -3",
     options: ["7", "1", "0", "-1"], correctIndex: 3 }),
@@ -1733,7 +1871,7 @@ data.push(
     options: ['UNIVAC I', 'Марк I (Harvard Mark I)', 'ENIAC', 'Z3 Конрада Цузе'], correctIndex: 3 }),
 
   evm({ question: 'Как выглядит запись непосредственной адресации в команде ADD?',
-    options: ['ADD R1, [VAR]', 'ADD R1, R2', 'ADD R1,', 'ADD [R1], 5'], correctIndex: 2 }),
+    options: ['ADD R1, [VAR]', 'ADD R1, R2', 'ADD R1, 5', 'ADD [R1], [R2]'], correctIndex: 2 }),
 
   evm({ question: 'Какая технология позволила создать компьютеры «второго поколения» (конец 1950-х — 1960-е гг.)?',
     options: ['Интегральные схемы (ИС)', 'Жесткие диски', 'Транзисторы', 'Вакуумные лампы'], correctIndex: 2 }),
@@ -1808,7 +1946,7 @@ data.push(
     options: ['Стековая память', 'Конечная лента с фиксированным числом ячеек', 'Бесконечная в обе стороны лента, разделенная на ячейки', 'Кольцевая лента (замкнутая в круг)'], correctIndex: 2 }),
 
   evm({ question: 'Каков синтаксис команды условного перехода в машине Поста?',
-    options: ['1', 'GOTO m1 IF cell', '1 THEN GOTO m1 ELSE GOTO m2', 'J(m1, m2)'], correctIndex: 2 }),
+    options: ['IF 1 GOTO m1', 'GOTO m1 IF cell', 'IF 1 THEN GOTO m1 ELSE GOTO m2', 'J(m1, m2)'], correctIndex: 2 }),
 
   evm({ question: 'Какая структура данных наиболее точно описывает ленту машины Поста с точки зрения реализации?',
     options: ['Очередь (Queue)', 'Связный список', 'Массив (Array)', 'Хеш-таблица (Map/Dictionary), где ключами являются целые числа (индексы ячеек)'], correctIndex: 3 }),
@@ -1861,10 +1999,10 @@ data.push(
   prog({"question": "Цикл с постусловием в Python?", "options": ["repeat until", "while", "for", "не существует"], "correctIndex": 3}),
   prog({"question": "Каким будет результат выполнения следующего кода: value = 0; value = value > 0 ? 0 : 1; print (value)", "options": ["ошибка", "1", "0"], "correctIndex": 0}),
   prog({"question": "Какой оператор используется для возведения числа в степень?", "options": ["%", "^", "**", "//"], "correctIndex": 2}),
-  prog({"question": "Что такое ilif?", "options": ["пропустить блок кода в if", "иначе если", "выполнить блок кода n раз", "выполнить при определенном условии, заданном в if"], "correctIndex": 1}),
+  prog({"question": "Что такое elif?", "options": ["пропустить блок кода в if", "иначе если", "выполнить блок кода n раз", "выполнить при определенном условии, заданном в if"], "correctIndex": 1}),
   prog({"type": "open", "question": "Что выведет следующий код? s = \"hello\"; print(s[1:4])", "answerText": "ell", "accept": ["ell"]}),
   prog({"question": "Какой метод используется для удаления элемента из множества (set)?", "options": [".remove()", "Оба А и В", ".pop()", ".delete()"], "correctIndex": 0}),
-  prog({"question": "Какой результат даст выражение: `5 // 2`?", "options": ["2", "3", "2.5", "Ошибка"], "correctIndex": 2}),
+  prog({"question": "Какой результат даст выражение: `5 // 2`?", "options": ["2", "3", "2.5", "Ошибка"], "correctIndex": 0, "note": "// — целочисленное деление: 5 // 2 = 2. Результат 2.5 даёт обычное деление 5 / 2."}),
   prog({"question": "В какой из следующих строк выполняется обращение к седьмому элементу списка, размер массива равен 10?", "options": ["mas[6]", "mas", "mas[7]", "mas(7)"], "correctIndex": 0}),
   prog({"question": "Какая конструкция открывает файл?", "options": ["open (path, 'r', encoding='UTF-8')", "read (path, 'r', encoding='UTF-8')", "file (path, 'r', encoding='UTF-8')"], "correctIndex": 0}),
   prog({"type": "match", "question": "Сопоставьте функцию строки с результатом ее работы.", "left": ["lower()", "upper()", "strip()", "find()", "split()"], "right": ["Преобразует все символы строки в строчные", "Преобразует все символы строки в заглавные", "Возвращает копию строки без пробельных символов в начале и конце", "Находит индекс первого вхождения подстроки", "Разбивает строку на список подстрок по разделителю"], "correctMap": [0, 1, 2, 3, 4]}),
@@ -2109,131 +2247,67 @@ data.push(
 );
 
 /* ---------------------------------------------------------
-   Предмет: Английский (источник — Паспорт ФОС по дисциплине
-   "Иностранный язык", УМК Headway; тесты 1–3 текущего контроля
-   и промежуточной аттестации).
-   Задания на "at/on/in", "no/any/none", формы глаголов и степени
-   сравнения даны в файле без ключа ответов — заполнены по
-   стандартным правилам грамматики. Правильный ответ на вопрос по
-   тексту о туризме и деление "table manners"-тем в США — из файла.
+   Предмет: Английский — New Headway Pre-Intermediate (3rd ed.),
+   Unit 3, Test A (по фото бланка). Пять заданий, как в тесте:
+   1–4 — вписать форму глагола (проверяется точный ответ, принимаются
+   полная и краткая формы отрицания), 5 — выбрать вариант.
+   Примеры из бланка (got, went, ran, didn't speak / introduced,
+   was watching) в вопросы не включены.
    --------------------------------------------------------- */
-const SUBJECT_ENG = "Английский";
-const eng = o => Object.assign({ subject: SUBJECT_ENG }, o);
+const ENG_T1 = "Английский — 1. Past Simple: диалоги";
+const ENG_T2 = "Английский — 2. Past Simple: текст";
+const ENG_T3 = "Английский — 3. Past Simple: предложения";
+const ENG_T4 = "Английский — 4. Past Simple / Past Continuous";
+const ENG_T5 = "Английский — 5. Thief's dog helps police";
+const engOpen = (subject, context, question, answers, hint) => ({ subject, type: "open", context, question, answerText: answers[0], exact: answers, hint });
+const engPick = (subject, context, question, options, correctIndex) => ({ subject, context, question, options, correctIndex });
 
 data.push(
-  eng({ question: "Read the text and choose the best summary.\n\n«Tourism is often described as a way to build bridges between cultures. When people travel to other countries, they experience new foods, customs, and ways of thinking. However, tourism can also have negative effects. In some places, local traditions become commercialised and are performed only for tourists. Local people may feel that their culture is being 'sold' rather than respected. The key question is whether tourism truly promotes understanding or simply turns culture into a product.»",
-    options: ["Tourism is always harmful to local cultures.", "Tourism is always positive because it promotes cultural exchange.", "Tourism has both positive and negative aspects; its value depends on whether it leads to genuine mutual understanding rather than exploitation.", "Tourists should stop visiting other countries to protect local traditions."], correctIndex: 2 }),
-
-  eng({ type: "multiple", question: "What topics are supposed to be touchy (sensitive, best avoided in small talk) in the USA?",
-    options: ["Money", "Religion", "Politics", "Weather"], correctIndexes: [0, 1, 2] }),
-
-  /* ---- Write at / on / in ---- */
-  eng({ type: "open", question: "Complete with at, on or in: Good bye! See you ___ Friday.",
-    answerText: "on", accept: ["on"] }),
-  eng({ type: "open", question: "Complete with at, on or in: Where were you ___ 28 February?",
-    answerText: "on", accept: ["on"] }),
-  eng({ type: "open", question: "Complete with at, on or in: Did you come here ___ the bus?",
-    answerText: "on", accept: ["on"] }),
-  eng({ type: "open", question: "Complete with at, on or in: Let's meet ___ 7:30 tomorrow evening.",
-    answerText: "at", accept: ["at"] }),
-  eng({ type: "open", question: "Complete with at, on or in: I like to look at the stars ___ night.",
-    answerText: "at", accept: ["at"] }),
-
-  /* ---- Put in no, any or none ---- */
-  eng({ type: "open", question: "Put in no, any or none: There aren't ___ pictures on the wall.",
-    answerText: "any", accept: ["any"] }),
-  eng({ type: "open", question: "Put in no, any or none: The weather was cold but there was ___ wind.",
-    answerText: "no", accept: ["no"] }),
-  eng({ type: "open", question: "Put in no, any or none: I wanted to buy some oranges but they didn't have ___ in the shop.",
-    answerText: "any", accept: ["any"] }),
-  eng({ type: "open", question: "Put in no, any or none: Everything was correct. There were ___ mistakes.",
-    answerText: "no", accept: ["no"] }),
-  eng({ type: "open", question: "Put in no, any or none: \"How much luggage have you got?\" — \"___.\"",
-    answerText: "None", accept: ["none"] }),
-
-  /* ---- Put am/is/are or do/does/don't/doesn't ---- */
-  eng({ type: "open", question: "Fill in am/is/are or do/does/don't/doesn't: What time ___ Maria usually arrive at school?",
-    answerText: "does", accept: ["does"] }),
-  eng({ type: "open", question: "Fill in am/is/are or do/does/don't/doesn't: How many brothers and sisters ___ he have?",
-    answerText: "does", accept: ["does"] }),
-
-  /* ---- Degrees of comparison ---- */
-  eng({ type: "open", question: "Write down the degrees of comparison of the adjective: high",
-    answerText: "higher — highest", accept: ["higher highest", "higher"] }),
-  eng({ type: "open", question: "Write down the degrees of comparison of the adjective: bad",
-    answerText: "worse — worst", accept: ["worse worst", "worse"] }),
-
-  /* ---- Proper form of the verb ---- */
-  eng({ type: "open", question: "Use the proper form of the verb in brackets: They ___ (to have) lunch at twelve o'clock.",
-    answerText: "have", accept: ["have"] }),
-  eng({ type: "open", question: "Use the proper form of the verb in brackets: She ___ (to wear) a beautiful blouse now.",
-    answerText: "is wearing", accept: ["is wearing", "wearing"] }),
-
-  /* ---- Multiple choice grammar test ---- */
-  eng({ question: "When the light ___ I was sitting in the armchair reading a book.",
-    options: ["goes out", "go out", "had gone out", "went out"], correctIndex: 3 }),
-  eng({ question: "Why haven't you brought me the letters for signature? ___ them yet?",
-    options: ["Don't you type", "Didn't you type", "Haven't you typed", "Will you type"], correctIndex: 2 }),
-  eng({ question: "I ___ my homework all morning and haven't finished it yet.",
-    options: ["am doing", "do", "have been doing", "did"], correctIndex: 2 }),
-  eng({ question: "I was very tired. When I ___ to bed, I fell asleep immediately.",
-    options: ["got", "has got", "had got", "will get"], correctIndex: 0 }),
-  eng({ question: "The Vikings ___ to North America a thousand years ago.",
-    options: ["sail", "sailed", "had sailed", "have sailed"], correctIndex: 1 }),
-
-  /* ---- Correct the mistakes ---- */
-  eng({ type: "recall", question: "Correct the mistake: Michael go to his friend's birthday party every year.",
-    answerText: "Michael goes to his friend's birthday party every year." }),
-  eng({ type: "recall", question: "Correct the mistake: You play tennis?",
-    answerText: "Do you play tennis?" }),
-  eng({ type: "recall", question: "Correct the mistake: She not cook dinner for her family yesterday.",
-    answerText: "She didn't cook dinner for her family yesterday." }),
-  eng({ type: "recall", question: "Correct the mistake: I submit an application form tomorrow.",
-    answerText: "I will submit an application form tomorrow. (или: I'm going to submit an application form tomorrow.)" }),
-  eng({ type: "recall", question: "Correct the mistake: He finished his work yet?",
-    answerText: "Has he finished his work yet?" }),
-
-  /* ---- Make positive negative / negative positive ---- */
-  eng({ type: "recall", question: "Make the verb negative: I watched an interesting TV program last night.",
-    answerText: "I didn't watch an interesting TV program last night." }),
-  eng({ type: "recall", question: "Make the verb positive: I didn't catch many fish.",
-    answerText: "I caught a lot of fish." }),
-
-  /* ---- Ask questions to the sentence ---- */
-  eng({ type: "recall", question: "Ask a question to the underlined part: Ann spoke to the manager ten minutes ago. (спросить «когда?»)",
-    answerText: "When did Ann speak to the manager?" }),
-  eng({ type: "recall", question: "Ask a question to the underlined part: Ann spoke to the manager ten minutes ago. (спросить «к кому?»)",
-    answerText: "Who did Ann speak to?" }),
-
-  /* ---- Соотнесите резкую фразу с более тактичной (деловое общение) ---- */
-  eng({ type: "match", question: "Match the blunt (too direct) sentence with a more tactful way of saying the same thing.",
-    left: ["It's too expensive to do it.", "You're telling lies.", "The room is filthy.", "That is stupid.", "Wednesday is impossible."],
-    right: ["I think we can do it on Wednesday.", "Is that really very sensible this way?", "I'm afraid Wednesday is not very convenient for me.", "I find that rather difficult to believe.", "The room isn't very clean.", "Wouldn't it be cheaper to do it another way?"],
-    correctMap: [5, 3, 4, 1, 2] }),
-
-  /* ---- Соотнесите ответ с вопросом ---- */
-  eng({ type: "match", question: "Match the answer with the question that was asked.",
-    left: ["After school, I usually do my homework and then play with my friends.",
-      "I go to the gym three times a week.",
-      "I enjoy reading mystery and adventure books.",
-      "My best friend is funny, kind, and very smart.",
-      "Last weekend, I went hiking and had a picnic.",
-      "My dream job is to be a teacher because I love helping others learn.",
-      "I usually celebrate my birthday with a party and a cake with my family and friends.",
-      "My favorite way to relax is to listen to music or watch movies.",
-      "I prefer to spend time outdoors, because it's good for my health.",
-      "For the next holiday, I plan to visit my grandparents and go to the beach."],
-    right: ["What do you usually do after school?",
-      "How often do you go to the gym?",
-      "What kind of books do you enjoy reading?",
-      "Can you describe your best friend?",
-      "What did you do last weekend?",
-      "What is your dream job?",
-      "How do you usually celebrate your birthday?",
-      "What is your favorite way to relax?",
-      "Do you prefer to spend time indoors or outdoors?",
-      "What are your plans for the next holiday?"],
-    correctMap: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] })
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 1:\nA: (get) I got angry with the kids.\nB: (have) ___ they ___ a party?\nA: No, they didn't, but they (eat) ___ everything that (be) ___ in the fridge. They (not wash up) ___ and they (forget) ___ to walk the dog.", "(2) (have) ___ they ___ a party? — впишите оба пропуска через пробел", ["Did they have", "did have"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 1:\nA: (get) I got angry with the kids.\nB: (have) ___ they ___ a party?\nA: No, they didn't, but they (eat) ___ everything that (be) ___ in the fridge. They (not wash up) ___ and they (forget) ___ to walk the dog.", "(3) …but they (eat) ___ everything", ["ate"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 1:\nA: (get) I got angry with the kids.\nB: (have) ___ they ___ a party?\nA: No, they didn't, but they (eat) ___ everything that (be) ___ in the fridge. They (not wash up) ___ and they (forget) ___ to walk the dog.", "(4) …everything that (be) ___ in the fridge", ["was"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 1:\nA: (get) I got angry with the kids.\nB: (have) ___ they ___ a party?\nA: No, they didn't, but they (eat) ___ everything that (be) ___ in the fridge. They (not wash up) ___ and they (forget) ___ to walk the dog.", "(5) They (not wash up) ___", ["didn't wash up", "did not wash up"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 1:\nA: (get) I got angry with the kids.\nB: (have) ___ they ___ a party?\nA: No, they didn't, but they (eat) ___ everything that (be) ___ in the fridge. They (not wash up) ___ and they (forget) ___ to walk the dog.", "(6) …and they (forget) ___ to walk the dog", ["forgot"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 2:\nA: (see) ___ you ___ the news on TV last night?\nB: I (see) ___ the local news but I (not watch) ___ the national news. Why?\nA: A reporter (speak) ___ to me at the station – (be) ___ I on TV?", "(7) (see) ___ you ___ the news on TV last night? — впишите оба пропуска через пробел", ["Did you see", "did see"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 2:\nA: (see) ___ you ___ the news on TV last night?\nB: I (see) ___ the local news but I (not watch) ___ the national news. Why?\nA: A reporter (speak) ___ to me at the station – (be) ___ I on TV?", "(8) I (see) ___ the local news", ["saw"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 2:\nA: (see) ___ you ___ the news on TV last night?\nB: I (see) ___ the local news but I (not watch) ___ the national news. Why?\nA: A reporter (speak) ___ to me at the station – (be) ___ I on TV?", "(9) …but I (not watch) ___ the national news", ["didn't watch", "did not watch"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 2:\nA: (see) ___ you ___ the news on TV last night?\nB: I (see) ___ the local news but I (not watch) ___ the national news. Why?\nA: A reporter (speak) ___ to me at the station – (be) ___ I on TV?", "(10) A reporter (speak) ___ to me at the station", ["spoke"]),
+  engOpen(ENG_T1, "Complete the conversation with the Past Simple form of the verbs in brackets.\n\nConversation 2:\nA: (see) ___ you ___ the news on TV last night?\nB: I (see) ___ the local news but I (not watch) ___ the national news. Why?\nA: A reporter (speak) ___ to me at the station – (be) ___ I on TV?", "(11) (be) ___ I on TV? — впишите только глагол", ["Was (I)", "was", "was i"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(2) they ___ their sons at home", ["left"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(3) The two boys ___ some pizzas", ["bought"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(4) and ___ their friends to the house", ["invited"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(5) their friends ___ some beer", ["had"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(6) things quickly ___ to go wrong", ["started"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(7) When Mr Bell ___ his sons", ["rang"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(8) to check they ___ OK", ["were"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(9) he ___ loud music and shouting", ["heard"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(10) He and Mrs Bell ___ home immediately", ["drove"]),
+  engOpen(ENG_T2, "Complete the text with the Past Simple form of the verbs in the list.\nbe · have · buy · drive · go · hear · invite · leave · ring · start · tell\n\nWhen Mr and Mrs Bell (1) went away for the weekend, they (2) ___ their sons at home. The two boys (3) ___ some pizzas and (4) ___ their friends to the house to watch videos. Unfortunately, their friends (5) ___ some beer and things quickly (6) ___ to go wrong. When Mr Bell (7) ___ his sons to check they (8) ___ OK, he (9) ___ loud music and shouting. He and Mrs Bell (10) ___ home immediately and (11) ___ the boys' friends to leave.", "(11) and ___ the boys' friends to leave", ["told"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "My mum ___ my Christmas presents so that I couldn't find them.", ["hid"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "It ___ to rain just as I was leaving the house.", ["began"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "I went to bed because I ___ tired.", ["felt"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "He ___ me that there was a ghost in the house.", ["told"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "Somebody ___ my bicycle from outside my house.", ["stole"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "It was a beautiful day and the sun ___ brightly.", ["shone"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "I ___ softly upstairs because I didn't want to wake the children.", ["crept"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "I ___ to carry the table but it was too heavy for me.", ["tried"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "He ___ the ball to me but I didn't catch it.", ["threw"]),
+  engOpen(ENG_T3, "Complete the sentence with the Past Simple form of a verb from the list.\nshine · run · begin · lead · creep · throw · feel · tell · try · steal · hide", "The dog ___ the police to the place where the thief was hiding.", ["led"]),
+  engOpen(ENG_T4, "Complete the sentence with the Past Simple or Past Continuous form of the verbs in brackets. Впишите оба пропуска через запятую.", "He (make) ___ lunch before I (arrive) ___.", ["made, arrived"], "Последовательные действия (before) — оба в Past Simple."),
+  engOpen(ENG_T4, "Complete the sentence with the Past Simple or Past Continuous form of the verbs in brackets. Впишите оба пропуска через запятую.", "She (have) ___ a shower when I (ring) ___ her.", ["was having, rang"], "Длительное действие прервано другим: was/were + -ing … when + Past Simple."),
+  engOpen(ENG_T4, "Complete the sentence with the Past Simple or Past Continuous form of the verbs in brackets. Впишите оба пропуска через запятую.", "He (not live) ___ there when I (meet) ___ him.", ["didn't live, met", "did not live, met"], "live — глагол состояния, в Continuous не употребляется."),
+  engOpen(ENG_T4, "Complete the sentence with the Past Simple or Past Continuous form of the verbs in brackets. Впишите оба пропуска через запятую.", "It (rain) ___ so they (not want) ___ to take the dog for a walk.", ["was raining, didn't want", "was raining, did not want"], "Фон — Past Continuous; want — глагол состояния."),
+  engOpen(ENG_T4, "Complete the sentence with the Past Simple or Past Continuous form of the verbs in brackets. Впишите оба пропуска через запятую.", "My boss (wait) ___ in my office when I (get) ___ to work two hours late.", ["was waiting, got"], "Действие в процессе (was waiting), когда произошло другое (got)."),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(2) when he ___ two police officers", ["saw", "was seeing"], 0),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(3) The police officers ___ to Shultz's house to arrest him", ["came", "were coming"], 1),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(4) Just as the officers ___ to his front door", ["walked", "were walking"], 1),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(5) Shultz suddenly ___ out of his back door", ["ran", "was running"], 0),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(6) and ___ in the neighbour's garden", ["hid", "was hiding"], 0),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(7) Shultz ___ behind his dog, Lemi", ["left", "was leaving"], 0),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(8) The police officers ___ Lemi to go and find his owner", ["told", "were telling"], 0),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(9) Lemi ___ into the garden next door", ["ran", "was running"], 0),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(10) and ___ happily next to the place in the bushes", ["stood", "was standing"], 1),
+  engPick(ENG_T5, "Choose the correct option.\n\nThief’s dog helps police\nIt was seven o'clock in the evening. Art thief Heinrich Shultz (1) was watching TV in his living room when he (2) saw / was seeing two police officers in the street outside his house. The police officers (3) came / were coming to Shultz's house to arrest him for stealing paintings from the city art gallery. Just as the officers (4) walked / were walking to his front door, Shultz suddenly (5) ran / was running out of his back door and (6) hid / was hiding in the neighbour's garden. However, Shultz (7) left / was leaving behind his dog, Lemi. The police officers (8) told / were telling Lemi to go and find his owner. Lemi (9) ran / was running into the garden next door and (10) stood / was standing happily next to the place in the bushes where his owner (11) hid / was hiding.", "(11) where his owner ___", ["hid", "was hiding"], 1)
 );
 
 /* ---------------------------------------------------------
@@ -2252,7 +2326,7 @@ const dv = o => Object.assign({ subject: SUBJECT_DV }, o);
 
 data.push(
   dv({ type: "open", answerText: "Республика Бурятия и Забайкальский край",
-    accept: ["бурят", "забайкал"],
+    accept: ["бурят", "забайкал"], acceptAll: true,
     question: "В настоящее время Дальневосточный ФО состоит из 11 субъектов Российской Федерации. Какие два субъекта вошли в состав ДФО в 2018 году?" }),
 
   dv({ type: "open", answerText: "Владивосток",
@@ -2485,7 +2559,7 @@ data.push(
     image: DM_IMG.q25,
     options: ["Граф 1", "Граф 2", "Граф 3", "Граф 4"],
     correctIndexes: [0, 3],
-    hint: "Эйлеров цикл есть, если граф связен и все степени вершин чётные. Посчитайте степени: у графа 2 все вершины степени 3, у графа 3 — две вершины степени 3." }),
+    hint: "Эйлеров цикл есть, если граф связен и все степени вершин чётные. Посчитайте степени: у графа 2 все вершины степени 3, у графа 3 — две вершины степени 3." , note: "В ключе банка ответ — 1, 3, 4. Но у графа 3 две вершины нечётной степени (3), поэтому эйлерова цикла у него нет — только эйлеров путь. Если преподаватель считает по ключу, отмечайте и граф 3."}),
 
   // 26 (вверху — граф G, варианты а–г ниже)
   dm({ type: "multiple", question: "Какие из графов являются подграфами данного графа G:",
@@ -3039,6 +3113,49 @@ itK("Кейс 1. Фишинговая атака на сотрудника.\nС�
 itK("Кейс 2. Утечка данных через облачный сервис.\nСотрудник хранил рабочие документы в личном облачном хранилище. Аккаунт взломали, злоумышленники получили доступ к конфиденциальной информации. Определите нарушения, правила безопасного использования, меры защиты и роль цифровой грамотности.",
   "Нарушения: хранение конфиденциальной рабочей информации в личном (некорпоративном) облаке, отсутствие шифрования, нарушение политик ИБ компании.\nБезопасное использование: только корпоративные облачные сервисы с шифрованием, разграничением прав доступа (RBAC) и обязательной 2FA.\nМеры защиты: DLP-системы (блокировка загрузки файлов в личные облака), подписание NDA, регулярный аудит доступа.\nРоль цифровой грамотности: грамотный сотрудник понимает риски непроверенных сервисов, знает корпоративные политики и умеет безопасно работать с данными.");
 
+/* --- Вопросы к экзамену (промежуточная аттестация — собеседование) и вопросы для собеседования из ФОС ---
+   В ФОС эталонов нет: ответы составлены по темам дисциплины для самопроверки. */
+const SUBJECT_IT_E = "Информационные технологии — Вопросы к экзамену";
+const itE = (question, answerText) => data.push({ subject: SUBJECT_IT_E, type: "recall", question, answerText });
+
+itE("1. Что такое цифровая грамотность и почему она важна в современном мире?",
+  "Цифровая грамотность — набор знаний и навыков для эффективного и безопасного использования цифровых технологий и интернета: поиск и оценка информации, общение, создание контента, защита данных.\nВажна потому, что учёба, работа, госуслуги, банки, общение перешли в цифровую среду; без неё человек уязвим для мошенников и проигрывает на рынке труда.");
+itE("2. Какие навыки и знания необходимы для становления цифровым гражданином?",
+  "Цифровой гражданин — человек, активно и ответственно использующий цифровые технологии.\nНужны: критическое мышление и проверка источников; сетевой этикет и этика в сети; уважение авторских прав; умение защищать персональные данные (пароли, 2FA); понимание цифровых рисков; умение пользоваться госуслугами и сервисами.");
+itE("3. Какие основные методы и операторы поиска информации в Интернете вы знаете?",
+  "Методы: поиск по ключевым словам в поисковых системах, тематические каталоги, базы данных и электронные библиотеки, специализированные поисковики (Google Scholar, eLIBRARY).\nОператоры: \"точная фраза\" в кавычках; минус (−слово) — исключить; site: — поиск по сайту; filetype: — тип файла; OR / | — любое из слов; * — пропущенное слово.\nЭтапы: цель → выбор поисковой системы → запрос → анализ результатов → оценка достоверности.");
+itE("4. Какие принципы и методы можно использовать для структурирования и визуализации больших объёмов информации?",
+  "Принципы: выделение главного, группировка и классификация, иерархия, наглядность.\nИнструменты: интеллект-карты (mind maps), таблицы, диаграммы и графики, инфографика, дашборды; программы — Excel/Google Таблицы, Power BI, Miro, XMind.");
+itE("5. Какие технологии и сервисы общего назначения вы применяли или знакомы с ними?",
+  "Сервисы общего назначения используются в разных областях: облачные хранилища (Яндекс Диск, Google Drive), электронная почта, облачный офис (Google Docs, Яндекс Документы), мессенджеры и соцсети, видеоконференции (Zoom, Телемост), управление проектами (Trello), хостинг кода (GitHub).\nВажно: использовать корпоративные/надёжные сервисы и 2FA.");
+itE("6. Что вы знаете об интернет-технологиях и технологиях No-code?",
+  "Интернет-технологии — технологии создания и работы веб-сайтов и передачи данных через интернет: HTTP (передача данных), HTML (разметка), CSS (стилизация), JavaScript (интерактивность), SQL (работа с БД).\nNo-code — разработка приложений и автоматизация без написания кода, через визуальные конструкторы (Tilda, Bubble, Glide и др.). Этапы: постановка задачи → выбор платформы → интерфейс → настройка логики → тестирование. Плюсы — быстро и дёшево; минусы — ограниченные возможности и зависимость от платформы.");
+itE("7. Какую роль базы знаний и wiki-технологии играют в современном информационном обществе?",
+  "База знаний — хранилище структурированной информации по теме, доступное для поиска и редактирования. Wiki-технологии — коллективное создание и редактирование веб-страниц (Википедия, Confluence).\nРоль: накопление и обмен знаниями, совместная работа, быстрый поиск ответов, сохранение опыта организации.\nРабота с базой знаний: сбор → структурирование → внесение → редактирование → использование.");
+itE("8. Какие основные принципы информационной безопасности вы знаете и применяете?",
+  "Информационная безопасность — защита информации от несанкционированного доступа, модификации и уничтожения.\nПринципы: конфиденциальность, целостность, доступность (+ наблюдаемость/подотчётность).\nНа практике: сложные разные пароли и 2FA, обновление ПО, антивирус, резервные копии, шифрование, осторожность со ссылками и вложениями.");
+itE("9. Какие наиболее распространённые угрозы информационной безопасности в сети Интернет и как их предотвратить?",
+  "Угрозы: фишинг, вирусы и вирусы-вымогатели, DDoS-атаки, кража личных данных, перехват трафика.\nЗащита: антивирус (от вирусов), шифрование (от кражи данных), VPN (от перехвата трафика), резервное копирование (от потери данных), проверка ссылок и отправителя (от фишинга), обновление ПО.\nПорядок действий: оценка угроз → выбор методов → внедрение → мониторинг → обновление.");
+itE("10. Какие результаты обучения по дисциплине «Информационные технологии» вы ожидаете?",
+  "Овладение навыками эффективного и безопасного использования ИТ (компетенция ОПК-1):\nзнать — понятие информационного общества, свойства информации, угрозы ИБ;\nуметь — искать и анализировать информацию для принятия решений, применять методы защиты;\nвладеть — работой с компьютером, облачными технологиями, навыками защиты данных в сети.");
+itE("11. Какие навыки и знания относятся к категории «уметь» в контексте цифровой грамотности?",
+  "«Уметь» — применять знания на практике: искать информацию, проверять достоверность источников, создавать надёжные пароли, работать с таблицами и документами, настраивать VPN и средства защиты.");
+itE("12. Что означает категория «владеть» в контексте использования информационных технологий?",
+  "«Владеть» — уверенно применять навыки в практической деятельности: использовать компьютер как средство управления информацией, облачные технологии для хранения и обработки данных, применять методы защиты в реальном проекте.\n(Для сравнения: «знать» — понимание принципов, «уметь» — выполнить конкретное действие.)");
+itE("13. Почему цифровая грамотность важна для профессионального развития и карьеры?",
+  "Почти любая профессия использует цифровые инструменты: документы, таблицы, облака, корпоративные системы, онлайн-коммуникации. Цифровая грамотность повышает эффективность и конкурентоспособность, позволяет быстро осваивать новое и учиться онлайн, снижает риск инцидентов ИБ по вине сотрудника.");
+itE("14. Какие факторы следует учитывать при выборе и использовании онлайн-курсов по цифровой грамотности?",
+  "Актуальность содержания, квалификация преподавателя, наличие практики, отзывы выпускников; также — наличие сертификата, обратной связи, удобство платформы и стоимость. Не важен, например, цвет сайта.");
+itE("15. Как можно повысить уровень цифровой грамотности в обществе через государственные и образовательные программы?",
+  "Национальные программы и проекты («Цифровая экономика», «Кадры для цифровой экономики»), бесплатные курсы и портал Госуслуг, уроки и дисциплины цифровой грамотности в школах и вузах, обучение пожилых людей, просветительские кампании по кибербезопасности, повышение квалификации работников и педагогов.");
+/* из вопросов для собеседования — не повторяющие экзаменационные */
+itE("Собеседование. Какие требования к информационной культуре считаются важными в цифровую эпоху и почему?",
+  "Информационная культура — понимание значимости информации, этика в сети и критическое мышление.\nТребования: умение искать и критически оценивать информацию, отличать факты от фейков, соблюдать этику и авторские права, защищать свои и чужие данные, постоянно обучаться. Без этого человек легко становится жертвой манипуляций и мошенников.");
+itE("Собеседование. Какую роль цифровая грамотность играет в повседневной жизни человека и в профессиональной деятельности?",
+  "В быту: госуслуги, онлайн-банк, покупки, общение, обучение, защита от мошенников.\nВ работе: документы и таблицы, облачные сервисы, видеосвязь, корпоративные системы, безопасная работа с данными. Цифровая грамотность экономит время и снижает риски.");
+itE("Собеседование. Что вы считаете ключевым для успешного владения информационными технологиями в современном мире?",
+  "Постоянное обучение и готовность осваивать новые инструменты, критическое мышление при работе с информацией, соблюдение правил информационной безопасности, практика — применение навыков в реальных задачах.");
+
 const EXAM_SIZE = 50;
 const PASS_PERCENT = 80;
 /* Предметы, у которых есть собственная кнопка «Экзамен» (без подсказок) */
@@ -3049,21 +3166,53 @@ const SUBJECT_EXAM_SIZE = 50; // максимум вопросов в экзам
    СОСТОЯНИЕ
    ========================================================= */
 const state = {
-  mode: null,        // 'subject' | 'marathon' | 'exam' | 'subjectExam'
+  mode: null,        // 'subject' | 'marathon' | 'exam' | 'subjectExam' | 'retry'
   subject: null,
+  folder: null,      // папка, из которой запущен раздел (для кнопки «Назад»)
   queue: [],
   index: 0,
   score: 0,
   wrong: 0,
+  hinted: 0,         // сколько раз открыта подсказка
   answered: false,
   hintShown: false,
   revealed: false,   // для type 'recall': ответ уже показан
   current: null,     // подготовленный вопрос (с перемешанными вариантами)
+  source: null,      // исходный вопрос из data (для «Повторить ошибки»)
   selected: [],      // выбранные индексы (multiple / order)
-  mistakes: []
+  mistakes: [],
+  retryOf: null      // режим, ошибки которого повторяем
 };
 
 const app = document.getElementById('app');
+
+/* ---------- Локальное хранилище (лучшие результаты, тема) ---------- */
+const store = {
+  get(key, fallback) {
+    try { const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); } catch (e) { return fallback; }
+  },
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* хранилище недоступно — не страшно */ }
+  }
+};
+const BEST_KEY = 'acc-prep-best-v1';
+const THEME_KEY = 'acc-prep-theme';
+
+function applyTheme(t) {
+  if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+  else delete document.documentElement.dataset.theme;
+}
+applyTheme(store.get(THEME_KEY, null));
+function isDark() {
+  const t = document.documentElement.dataset.theme;
+  if (t) return t === 'dark';
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+function toggleTheme() {
+  const next = isDark() ? 'light' : 'dark';
+  applyTheme(next);
+  store.set(THEME_KEY, next);
+}
 
 /* =========================================================
    УТИЛИТЫ
@@ -3189,7 +3338,7 @@ function buildRich(name, args) {
 
 /* Превращает строку с разметкой в DOM (текст, индексы, дроби, матрицы...) */
 function rich(str) {
-  const s = String(str);
+  const s = String(str == null ? '' : str);
   const frag = document.createDocumentFragment();
   let buf = '', i = 0;
   const flush = () => { if (buf) { frag.appendChild(document.createTextNode(buf)); buf = ''; } };
@@ -3243,9 +3392,21 @@ function pluralize(n, one, few, many) {
   if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
   return many;
 }
+const qWord = n => n + ' ' + pluralize(n, 'вопрос', 'вопроса', 'вопросов');
 
 function normalize(s) {
-  return s.toLowerCase().replace(/ё/g, 'е').replace(/[^a-zа-я0-9]+/g, ' ').trim();
+  return String(s).toLowerCase().replace(/ё/g, 'е').replace(/[^a-zа-я0-9]+/g, ' ').trim();
+}
+
+/* Проверка открытого ответа: ключевая основа должна стоять в начале слова.
+   Короткие ключи (до 3 букв: on, at, no, z…) — только как целое слово,
+   чтобы «many» не засчитывалось за «any», а «none» — за «on». */
+function stemMatches(val, stem) {
+  const s = normalize(stem);
+  if (!s) return false;
+  const padded = ' ' + val + ' ';
+  if (s.length <= 3) return padded.includes(' ' + s + ' ');
+  return padded.includes(' ' + s);
 }
 
 function subjects() {
@@ -3269,6 +3430,21 @@ function folderMap() {
     (folders[top] = folders[top] || []).push(name);
   });
   return folders;
+}
+
+/* Цвет и монограмма предмета — стабильные, вычисляются из названия */
+function accentFor(name) {
+  let h = 0;
+  for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  const hues = [172, 200, 222, 262, 292, 330, 12, 28, 45, 140, 186, 240];
+  const hue = hues[h % hues.length];
+  return isDark() ? `hsl(${hue} 60% 66%)` : `hsl(${hue} 62% 36%)`;
+}
+function monogram(name) {
+  const words = name.replace(/[«»()"]/g, '').split(/[\s\-—]+/).filter(w => w && /[A-Za-zА-Яа-яЁё]/.test(w[0]));
+  const big = words.filter(w => w.length > 2);
+  const pick = (big.length >= 2 ? big : words).slice(0, 2);
+  return pick.map(w => w[0].toUpperCase()).join('') || '?';
 }
 
 function qType(q) { return q.type || 'single'; }
@@ -3346,6 +3522,21 @@ function correctAnswerText(q) {
     case 'open':
     case 'recall': return q.answerText;
   }
+  return '';
+}
+
+/* Картинки правильных вариантов (для разбора ошибок) */
+function correctImages(q) {
+  const t = qType(q);
+  const idx = t === 'single' ? [q.correctIndex] : t === 'multiple' ? q.correctIndexes : [];
+  return idx.map(i => q.options[i]).filter(o => o && typeof o === 'object' && o.img).map(o => o.img);
+}
+
+function noteBox(text) {
+  const box = el('div', 'note-box');
+  box.appendChild(el('b', null, 'Примечание: '));
+  box.appendChild(rich(text));
+  return box;
 }
 
 /* Автоматический расчёт пропорций для экзамена (метод наибольших остатков) */
@@ -3385,19 +3576,25 @@ function buildExam(total) {
 /* =========================================================
    ЗАПУСК РЕЖИМОВ
    ========================================================= */
-function start(mode, subject) {
+function start(mode, subject, opts) {
+  opts = opts || {};
   state.mode = mode;
   state.subject = subject || null;
+  if (opts.folder !== undefined) state.folder = opts.folder;
+  else if (mode !== 'retry') state.folder = null;
   state.index = 0;
   state.score = 0;
   state.wrong = 0;
+  state.hinted = 0;
   state.mistakes = [];
 
   if (mode === 'subject') state.queue = shuffle(data.filter(q => q.subject === subject));
   else if (mode === 'marathon') state.queue = shuffle(data);
   else if (mode === 'subjectExam') state.queue = shuffle(data.filter(q => q.subject === subject)).slice(0, SUBJECT_EXAM_SIZE);
+  else if (mode === 'retry') state.queue = shuffle(opts.queue || []);
   else state.queue = buildExam(EXAM_SIZE);
 
+  if (!state.queue.length) { renderMenu(); return; }
   loadQuestion();
 }
 
@@ -3405,95 +3602,181 @@ function modeTitle() {
   if (state.mode === 'subject') return state.subject;
   if (state.mode === 'marathon') return 'Марафон';
   if (state.mode === 'subjectExam') return 'Экзамен: ' + state.subject;
+  if (state.mode === 'retry') return 'Работа над ошибками';
   return 'Экзамен';
 }
 
+function hintsAllowed() {
+  return state.mode === 'subject' || state.mode === 'retry';
+}
+
 function loadQuestion() {
-  state.current = prepare(state.queue[state.index]);
+  state.source = state.queue[state.index];
+  state.current = prepare(state.source);
   state.answered = false;
   state.hintShown = false;
   state.revealed = false;
   state.selected = state.current.type === 'match' ? state.current.left.map(() => -1) : [];
   renderQuestion();
+  window.scrollTo(0, 0);
+}
+
+function inProgress() {
+  return state.index > 0 || state.answered || state.selected.some(v => v >= 0);
+}
+
+function backTarget() {
+  if (state.folder) {
+    const folders = folderMap();
+    if (folders[state.folder]) return () => renderFolder(state.folder, folders[state.folder]);
+  }
+  return renderMenu;
 }
 
 /* =========================================================
    ЭКРАНЫ
    ========================================================= */
+function subjectCard(name, label, count, onClick, extra) {
+  const card = el('div', 'card');
+  card.style.setProperty('--accent', accentFor(name));
+  const b = el('button', 'card-btn');
+  b.appendChild(el('span', 'monogram', monogram(label)));
+  const body = el('span', 'card-body');
+  body.appendChild(el('span', 'title', label));
+  body.appendChild(el('span', 'meta', count));
+  const best = store.get(BEST_KEY, {})[name];
+  if (typeof best === 'number') {
+    const row = el('span', 'best');
+    const bar = el('span', 'bar'); const fill = el('i'); fill.style.width = best + '%'; bar.appendChild(fill);
+    row.appendChild(bar);
+    row.appendChild(el('span', null, 'лучший: ' + best + '%'));
+    body.appendChild(row);
+  }
+  b.appendChild(body);
+  b.addEventListener('click', onClick);
+  card.appendChild(b);
+  if (extra) card.appendChild(extra);
+  return card;
+}
+
 function renderMenu() {
+  state.mode = null;
   app.innerHTML = '';
-  app.appendChild(el('h1', null, 'Подготовка к аккредитации'));
-  app.appendChild(el('p', 'lead', 'Выберите предмет для тренировки или запустите смешанный режим.'));
-
-  app.appendChild(el('h2', null, 'Предметы'));
-  const grid = el('div', 'grid');
   const folders = folderMap();
-  Object.keys(folders).forEach(top => {
-    const list = folders[top];
-    const isFolder = list.length > 1;
-    const count = data.filter(q => list.includes(q.subject)).length;
-    const b = el('button', 'card-btn');
-    b.appendChild(el('span', 'title', top + (isFolder ? ' 📂' : '')));
-    const meta = isFolder
-      ? list.length + ' ' + pluralize(list.length, 'раздел', 'раздела', 'разделов') + ' · ' + count + ' ' + pluralize(count, 'вопрос', 'вопроса', 'вопросов')
-      : count + ' ' + pluralize(count, 'вопрос', 'вопроса', 'вопросов') + ' · с подсказками';
-    b.appendChild(el('span', 'meta', meta));
-    b.addEventListener('click', () => isFolder ? renderFolder(top, list) : start('subject', list[0]));
-    if (!isFolder && EXAM_SUBJECTS.includes(list[0])) {
-      const wrap = el('div', 'card-wrap');
-      wrap.appendChild(b);
-      const ex = el('button', 'exam-btn', 'ЭКЗАМЕН · без подсказок');
-      ex.addEventListener('click', () => start('subjectExam', list[0]));
-      wrap.appendChild(ex);
-      grid.appendChild(wrap);
-    } else {
-      grid.appendChild(b);
-    }
-  });
-  app.appendChild(grid);
+  const tops = Object.keys(folders);
 
+  const hero = el('header', 'hero');
+  const htxt = el('div');
+  htxt.appendChild(el('h1', null, 'Подготовка к аккредитации'));
+  htxt.appendChild(el('p', 'lead', 'Выберите предмет для тренировки с подсказками или проверьте себя в марафоне и экзамене.'));
+  const chips = el('div', 'hero-stats');
+  chips.appendChild(el('span', 'chip', tops.length + ' ' + pluralize(tops.length, 'предмет', 'предмета', 'предметов')));
+  chips.appendChild(el('span', 'chip', qWord(data.length)));
+  chips.appendChild(el('span', 'chip', 'Порог сдачи ' + PASS_PERCENT + '%'));
+  htxt.appendChild(chips);
+  hero.appendChild(htxt);
+  const theme = el('button', 'icon-btn', isDark() ? '☀' : '☾');
+  theme.title = 'Сменить тему';
+  theme.setAttribute('aria-label', 'Сменить светлую/тёмную тему');
+  theme.addEventListener('click', () => { toggleTheme(); renderMenu(); });
+  hero.appendChild(theme);
+  app.appendChild(hero);
+
+  // смешанные режимы
+  const mh = el('div', 'section-head');
+  mh.appendChild(el('h2', null, 'Смешанные режимы'));
+  app.appendChild(mh);
   const modes = el('div', 'modes');
   const examCount = Math.min(EXAM_SIZE, data.length);
 
   const m = el('button', 'mode-btn');
-  m.appendChild(el('span', 'title', 'МАРАФОН'));
-  m.appendChild(el('span', 'meta', 'Все ' + data.length + ' ' + pluralize(data.length, 'вопрос', 'вопроса', 'вопросов') + ' вперемешку, без подсказок'));
+  m.appendChild(el('span', 'title', 'Марафон'));
+  m.appendChild(el('span', 'meta', 'Все ' + qWord(data.length) + ' вперемешку, без подсказок'));
   m.addEventListener('click', () => start('marathon'));
   modes.appendChild(m);
 
   const e = el('button', 'mode-btn alt');
-  e.appendChild(el('span', 'title', 'ЭКЗАМЕН ' + EXAM_SIZE + ' ВОПРОСОВ'));
+  e.appendChild(el('span', 'title', 'Экзамен · ' + examCount + ' ' + pluralize(examCount, 'вопрос', 'вопроса', 'вопросов')));
   e.appendChild(el('span', 'meta',
     examCount < EXAM_SIZE
-      ? 'В базе только ' + data.length + ' — в тесте будут все; проходной балл ' + PASS_PERCENT + '%'
-      : 'Пропорционально предметам, проходной балл ' + PASS_PERCENT + '%'));
+      ? 'В базе только ' + data.length + ' — в тесте будут все'
+      : 'Из всех предметов пропорционально, без подсказок'));
   e.addEventListener('click', () => start('exam'));
   modes.appendChild(e);
   app.appendChild(modes);
+
+  // предметы
+  const sh = el('div', 'section-head');
+  sh.appendChild(el('h2', null, 'Предметы'));
+  const search = el('input', 'search');
+  search.type = 'search';
+  search.placeholder = 'Найти предмет';
+  search.setAttribute('aria-label', 'Поиск предмета');
+  sh.appendChild(search);
+  app.appendChild(sh);
+
+  const grid = el('div', 'grid');
+  const empty = el('p', 'empty', 'Ничего не найдено');
+  empty.hidden = true;
+  tops.forEach(top => {
+    const list = folders[top];
+    const isFolder = list.length > 1;
+    const count = data.filter(q => list.includes(q.subject)).length;
+    const meta = isFolder
+      ? list.length + ' ' + pluralize(list.length, 'раздел', 'раздела', 'разделов') + ' · ' + qWord(count)
+      : qWord(count) + ' · с подсказками';
+    let extra = null;
+    if (!isFolder && EXAM_SUBJECTS.includes(list[0])) {
+      extra = el('button', 'exam-btn');
+      extra.appendChild(el('span', null, 'Экзамен без подсказок'));
+      extra.appendChild(el('span', null, '→'));
+      extra.addEventListener('click', () => start('subjectExam', list[0]));
+    }
+    const card = subjectCard(isFolder ? top : list[0], top + (isFolder ? ' ›' : ''), meta,
+      () => isFolder ? renderFolder(top, list) : start('subject', list[0]), extra);
+    card.dataset.search = normalize(top + ' ' + list.join(' '));
+    grid.appendChild(card);
+  });
+  app.appendChild(grid);
+  app.appendChild(empty);
+
+  search.addEventListener('input', () => {
+    const v = normalize(search.value);
+    let shown = 0;
+    grid.querySelectorAll('.card').forEach(c => {
+      const ok = !v || c.dataset.search.includes(v);
+      c.hidden = !ok; if (ok) shown++;
+    });
+    empty.hidden = shown > 0;
+  });
+
+  app.appendChild(el('p', 'footer-note', 'Подсказка: на компьютере можно отвечать с клавиатуры — цифры выбирают вариант, Enter — проверить / дальше.'));
 }
 
 function renderFolder(top, list) {
+  state.mode = null;
   app.innerHTML = '';
 
   const top1 = el('div', 'topbar');
   const back = el('button', 'ghost', '← Меню');
   back.addEventListener('click', renderMenu);
   top1.appendChild(back);
+  top1.appendChild(el('div', 'mode-label', top));
   app.appendChild(top1);
 
   app.appendChild(el('h1', null, top));
-  app.appendChild(el('p', 'lead', 'Выберите раздел.'));
+  const total = data.filter(q => list.includes(q.subject)).length;
+  app.appendChild(el('p', 'lead', 'Выберите раздел · всего ' + qWord(total) + '.'));
+  app.appendChild(el('div', 'section-head'));
 
   const grid = el('div', 'grid');
   list.forEach(name => {
     const count = data.filter(q => q.subject === name).length;
-    const b = el('button', 'card-btn');
-    b.appendChild(el('span', 'title', sectionLabel(name) || name));
-    b.appendChild(el('span', 'meta', count + ' ' + pluralize(count, 'вопрос', 'вопроса', 'вопросов') + ' · с подсказками'));
-    b.addEventListener('click', () => start('subject', name));
-    grid.appendChild(b);
+    const label = sectionLabel(name) || name;
+    grid.appendChild(subjectCard(name, label, qWord(count) + ' · с подсказками', () => start('subject', name, { folder: top })));
   });
   app.appendChild(grid);
+  window.scrollTo(0, 0);
 }
 
 function renderQuestion() {
@@ -3503,9 +3786,9 @@ function renderQuestion() {
 
   // верхняя панель
   const top = el('div', 'topbar');
-  const back = el('button', 'ghost', 'Меню');
+  const back = el('button', 'ghost', '← Выйти');
   back.addEventListener('click', () => {
-    if (confirm('Выйти в меню? Прогресс будет потерян.')) renderMenu();
+    if (!inProgress() || confirm('Выйти? Прогресс этой попытки будет потерян.')) backTarget()();
   });
   top.appendChild(back);
   top.appendChild(el('div', 'mode-label', modeTitle()));
@@ -3513,6 +3796,10 @@ function renderQuestion() {
   app.appendChild(top);
 
   const progress = el('div', 'progress');
+  progress.setAttribute('role', 'progressbar');
+  progress.setAttribute('aria-valuemin', '0');
+  progress.setAttribute('aria-valuemax', String(state.queue.length));
+  progress.setAttribute('aria-valuenow', String(state.index));
   const bar = el('div');
   bar.style.width = (state.index / state.queue.length * 100) + '%';
   progress.appendChild(bar);
@@ -3520,9 +3807,15 @@ function renderQuestion() {
 
   // карточка вопроса
   const panel = el('div', 'panel');
-  if (state.mode !== 'subject') panel.appendChild(el('span', 'subject-tag', q.subject));
-  else panel.appendChild(el('span', 'subject-tag', 'Верно: ' + state.score + ' · Ошибок: ' + state.wrong));
-  if (q.lecture) panel.appendChild(el('span', 'subject-tag lecture', q.lecture));
+  const tags = el('div', 'tags');
+  if (state.mode !== 'subject') tags.appendChild(el('span', 'subject-tag', q.subject));
+  if (q.lecture) tags.appendChild(el('span', 'subject-tag lecture', q.lecture));
+  const sc = el('span', 'subject-tag score');
+  sc.id = 'score-tag';
+  panel.appendChild(tags);
+  tags.appendChild(sc);
+  paintScore();
+  if (q.context) panel.appendChild(richEl('div', 'context', q.context));
   panel.appendChild(richEl('p', 'question', q.question));
   if (q.image) { const qi = el('img', 'q-image'); qi.src = q.image; qi.alt = 'Рисунок к вопросу'; panel.appendChild(qi); }
 
@@ -3534,12 +3827,22 @@ function renderQuestion() {
     match: 'Для каждого пункта выберите номер соответствующего варианта и нажмите «Проверить».',
     recall: 'Вспомните ответ, затем нажмите «Показать ответ» и отметьте, знали ли вы его.'
   };
-  if (q.table) panel.appendChild(buildTable(q.table, 'q-table'));
+  if (q.table) { const w = el('div', 'table-wrap'); w.appendChild(buildTable(q.table, 'q-table')); panel.appendChild(w); }
   if (q.after) panel.appendChild(richEl('p', 'question', q.after));
-  panel.appendChild(el('p', 'instruction', instructions[type]));
+  const instr = el('p', 'instruction', instructions[type]);
+  if (type === 'single' || type === 'multiple' || type === 'order') {
+    const k = el('span', 'kbd-hint');
+    k.appendChild(document.createTextNode('· '));
+    k.appendChild(el('kbd', null, '1'));
+    k.appendChild(document.createTextNode('–'));
+    k.appendChild(el('kbd', null, String(Math.min(9, q.options.length))));
+    instr.appendChild(k);
+  }
+  panel.appendChild(instr);
 
   const feedbackBox = el('div');
   feedbackBox.id = 'feedback';
+  feedbackBox.setAttribute('aria-live', 'polite');
 
   if (type === 'open') {
     const input = el('input', 'text-answer');
@@ -3547,8 +3850,12 @@ function renderQuestion() {
     input.id = 'open-input';
     input.placeholder = 'Ваш ответ';
     input.autocomplete = 'off';
-    input.addEventListener('keydown', ev => { if (ev.key === 'Enter') checkAnswer(); });
+    input.setAttribute('autocapitalize', 'off');
+    input.spellcheck = false;
+    if (q.numeric !== undefined) input.inputMode = 'decimal';
+    input.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); ev.stopPropagation(); state.answered ? nextQuestion() : checkAnswer(); } });
     panel.appendChild(input);
+    setTimeout(() => { if (window.matchMedia('(hover: hover)').matches) input.focus({ preventScroll: true }); }, 0);
   } else if (type !== 'recall') {
     if (type === 'match') {
       const legend = el('ol', 'legend');
@@ -3580,7 +3887,7 @@ function renderQuestion() {
       q.options.forEach((opt, i) => {
         const b = el('button', 'option');
         b.dataset.i = i;
-        b.appendChild(el('span', 'mark', type === 'multiple' ? '' : (type === 'order' ? '' : letter(i))));
+        b.appendChild(el('span', 'mark', (type === 'multiple' || type === 'order') ? '' : letter(i)));
         b.appendChild(optionContent(opt));
         b.addEventListener('click', () => onOptionClick(i));
         list.appendChild(b);
@@ -3600,6 +3907,16 @@ function renderQuestion() {
   refreshActions();
 }
 
+function paintScore() {
+  const sc = document.getElementById('score-tag');
+  if (!sc) return;
+  sc.replaceChildren();
+  sc.appendChild(document.createTextNode('Верно: '));
+  sc.appendChild(el('b', null, String(state.score)));
+  sc.appendChild(document.createTextNode(' · Ошибок: '));
+  sc.appendChild(el('em', null, String(state.wrong)));
+}
+
 function refreshActions() {
   const q = state.current;
   const type = qType(q);
@@ -3608,20 +3925,23 @@ function refreshActions() {
 
   if (state.answered) {
     const last = state.index === state.queue.length - 1;
-    const next = el('button', 'btn', last ? 'Показать результат' : 'Следующий вопрос');
+    const next = el('button', 'btn', last ? 'Показать результат' : 'Следующий вопрос →');
+    next.id = 'next-btn';
     next.addEventListener('click', nextQuestion);
     actions.appendChild(next);
-    next.focus();
+    if (usingKeyboard) next.focus({ preventScroll: true });
     return;
   }
 
   if (type === 'recall') {
     if (!state.revealed) {
       const show = el('button', 'btn', 'Показать ответ');
+      show.id = 'check-btn';
       show.addEventListener('click', revealAnswer);
       actions.appendChild(show);
     } else {
       const knew = el('button', 'btn', 'Знал ответ');
+      knew.id = 'check-btn';
       knew.addEventListener('click', () => finish(true));
       const didnt = el('button', 'btn secondary', 'Не знал');
       didnt.addEventListener('click', () => finish(false));
@@ -3646,10 +3966,11 @@ function refreshActions() {
     actions.appendChild(reset);
   }
 
-  // Подсказка — только в режиме «Подготовка по предмету»
-  if (state.mode === 'subject') {
+  // Подсказка — только в тренировочных режимах
+  if (hintsAllowed()) {
     actions.appendChild(el('span', 'spacer'));
     const hint = el('button', 'btn hint-btn', 'Подсказка');
+    hint.disabled = state.hintShown;
     hint.addEventListener('click', showHint);
     actions.appendChild(hint);
   }
@@ -3665,11 +3986,7 @@ function onOptionClick(i) {
     finish(i === state.current.correctIndex);
     return;
   }
-  if (type === 'multiple') {
-    const pos = state.selected.indexOf(i);
-    if (pos >= 0) state.selected.splice(pos, 1); else state.selected.push(i);
-  }
-  if (type === 'order') {
+  if (type === 'multiple' || type === 'order') {
     const pos = state.selected.indexOf(i);
     if (pos >= 0) state.selected.splice(pos, 1); else state.selected.push(i);
   }
@@ -3689,6 +4006,7 @@ function paintSelection() {
     const pos = state.selected.indexOf(i);
     const mark = btn.querySelector('.mark');
     btn.classList.toggle('selected', pos >= 0);
+    btn.setAttribute('aria-pressed', pos >= 0 ? 'true' : 'false');
     if (type === 'multiple') mark.textContent = pos >= 0 ? '✓' : '';
     if (type === 'order') mark.textContent = pos >= 0 ? (pos + 1) : '';
   });
@@ -3701,21 +4019,33 @@ function checkAnswer() {
   const type = qType(q);
   let ok = false;
 
-  if (type === 'match') ok = state.selected.every((v, i) => v === q.correctMap[i]);
-  else if (type === 'multiple') ok = sameSet(state.selected, q.correctIndexes);
-  else if (type === 'order') ok = sameSeq(state.selected, q.correctOrder);
-  else if (type === 'open') {
+  if (type === 'match') {
+    if (state.selected.some(v => v < 0)) return;
+    ok = state.selected.every((v, i) => v === q.correctMap[i]);
+  } else if (type === 'multiple') {
+    if (!state.selected.length) return;
+    ok = sameSet(state.selected, q.correctIndexes);
+  } else if (type === 'order') {
+    if (state.selected.length !== q.options.length) return;
+    ok = sameSeq(state.selected, q.correctOrder);
+  } else if (type === 'open') {
     const input = document.getElementById('open-input');
     const val = normalize(input.value);
     if (!val) { input.focus(); return; }
-    if (q.numeric !== undefined) {
-      const nums = input.value.replace(/[−–]/g, '-').replace(',', '.').match(/-?\d+(?:\.\d+)?/g);
+    if (q.exact) {
+      const norm = x => normalize(String(x).replace(/[’‘`']/g, ''));
+      ok = q.exact.some(a => norm(a) === norm(input.value));
+    } else if (q.numeric !== undefined) {
+      const nums = input.value.replace(/[−–—]/g, '-').replace(/,/g, '.').match(/-?\d+(?:\.\d+)?/g);
       ok = !!nums && nums.length === 1 && Number(nums[0]) === q.numeric;
     } else {
-      ok = q.accept.some(stem => val.includes(normalize(stem)));
+      const test = stem => stemMatches(val, stem);
+      ok = q.acceptAll ? q.accept.every(test) : q.accept.some(test);
     }
     input.classList.add(ok ? 'correct' : 'wrong');
     input.disabled = true;
+  } else {
+    return;
   }
   finish(ok);
 }
@@ -3726,6 +4056,7 @@ function revealAnswer() {
   const box = el('div', 'notice hint');
   box.appendChild(el('strong', null, 'Ответ'));
   box.appendChild(richEl('span', null, correctAnswerText(state.current)));
+  if (state.current.note) box.appendChild(noteBox(state.current.note));
   document.getElementById('feedback').replaceChildren(box);
   refreshActions();
 }
@@ -3733,23 +4064,38 @@ function revealAnswer() {
 function showHint() {
   if (state.answered || state.hintShown) return;
   state.hintShown = true;
+  state.hinted++;
   const q = state.current;
   const type = qType(q);
+  const opts = document.querySelectorAll('#options .option');
 
-  if (type === 'single') document.querySelectorAll('#options .option')[q.correctIndex].classList.add('hint');
-  if (type === 'multiple') q.correctIndexes.forEach(i => document.querySelectorAll('#options .option')[i].classList.add('hint'));
+  if (type === 'single' && opts[q.correctIndex]) opts[q.correctIndex].classList.add('hint');
+  if (type === 'multiple') q.correctIndexes.forEach(i => opts[i] && opts[i].classList.add('hint'));
 
   const box = el('div', 'notice hint');
   box.appendChild(el('strong', null, 'Подсказка'));
   box.appendChild(richEl('span', null, q.hint || correctAnswerText(q)));
   document.getElementById('feedback').replaceChildren(box);
+  refreshActions();
 }
 
 function finish(ok) {
+  if (state.answered) return;
   const q = state.current;
   const type = qType(q);
   state.answered = true;
-  if (ok) state.score++; else { state.wrong++; state.mistakes.push({ question: q.question + (q.after ? ' ' + q.after : ''), answer: correctAnswerText(q), img: (type === 'single' && q.options[q.correctIndex] && q.options[q.correctIndex].img) || null }); }
+  if (ok) state.score++;
+  else {
+    state.wrong++;
+    state.mistakes.push({
+      source: state.source,
+      question: q.question + (q.after ? '\n' + q.after : ''),
+      answer: correctAnswerText(q),
+      note: q.note || null,
+      imgs: correctImages(q)
+    });
+  }
+  paintScore();
 
   // раскраска
   if (type === 'match') {
@@ -3770,9 +4116,10 @@ function finish(ok) {
     } else if (type === 'multiple') {
       const isCorrect = q.correctIndexes.includes(i);
       const chosen = state.selected.includes(i);
-      if (isCorrect && chosen) btn.classList.add('correct');
-      else if (!isCorrect && chosen) btn.classList.add('wrong');
-      else if (isCorrect && !chosen) btn.classList.add('correct', 'missed');
+      const mark = btn.querySelector('.mark');
+      if (isCorrect && chosen) { btn.classList.add('correct'); mark.textContent = '✓'; }
+      else if (!isCorrect && chosen) { btn.classList.add('wrong'); mark.textContent = '✕'; }
+      else if (isCorrect && !chosen) { btn.classList.add('correct', 'missed'); mark.textContent = '✓'; }
     } else if (type === 'order') {
       const mark = btn.querySelector('.mark');
       const correctPos = q.correctOrder.indexOf(i);
@@ -3785,49 +4132,127 @@ function finish(ok) {
   const box = el('div', 'notice ' + (ok ? 'ok' : 'bad'));
   const isRecall = type === 'recall';
   box.appendChild(el('strong', null, ok ? (isRecall ? 'Засчитано' : 'Верно!') : (isRecall ? 'Нужно повторить' : 'Неверно')));
-  if (!ok && type !== 'match') {
+  if (isRecall) {
+    box.appendChild(richEl('span', null, correctAnswerText(q)));
+  } else if (!ok && type !== 'match') {
     const label = type === 'order' ? 'Правильный порядок: ' : 'Правильный ответ: ';
     box.appendChild(richEl('span', null, label + correctAnswerText(q)));
+  } else if (ok && type === 'open') {
+    box.appendChild(richEl('span', null, 'Эталон: ' + correctAnswerText(q)));
   }
+  if (q.note) box.appendChild(noteBox(q.note));
   document.getElementById('feedback').replaceChildren(box);
   refreshActions();
 }
 
 function nextQuestion() {
+  if (!state.answered) return;
   state.index++;
   if (state.index >= state.queue.length) renderResult();
   else loadQuestion();
 }
 
+/* ---------- клавиатура ---------- */
+let usingKeyboard = false;
+document.addEventListener('pointerdown', () => { usingKeyboard = false; }, true);
+document.addEventListener('keydown', ev => {
+  if (ev.key === 'Tab' || ev.key === 'Enter' || /^[1-9]$/.test(ev.key)) usingKeyboard = true;
+  if (!state.mode || !state.current || ev.ctrlKey || ev.metaKey || ev.altKey) return;
+  const tag = (ev.target && ev.target.tagName) || '';
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+  const type = qType(state.current);
+
+  if (ev.key === 'Enter') {
+    if (tag === 'BUTTON' && ev.target.id !== 'next-btn' && ev.target.id !== 'check-btn') return; // обычное нажатие кнопки
+    if (state.answered) { ev.preventDefault(); nextQuestion(); return; }
+    const check = document.getElementById('check-btn');
+    if (check && !check.disabled) { ev.preventDefault(); check.click(); }
+    return;
+  }
+  if (state.answered) return;
+  if (/^[1-9]$/.test(ev.key) && (type === 'single' || type === 'multiple' || type === 'order')) {
+    const i = Number(ev.key) - 1;
+    if (i < state.current.options.length) { ev.preventDefault(); onOptionClick(i); }
+  }
+});
+
 /* ---------- результат ---------- */
+function ring(percent, passed) {
+  const wrap = el('div', 'ring');
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 120 120');
+  svg.setAttribute('aria-hidden', 'true');
+  const r = 52, c = 2 * Math.PI * r;
+  const mk = (cls, color) => {
+    const ci = document.createElementNS(NS, 'circle');
+    ci.setAttribute('cx', '60'); ci.setAttribute('cy', '60'); ci.setAttribute('r', String(r));
+    ci.setAttribute('fill', 'none'); ci.setAttribute('stroke-width', '11');
+    ci.setAttribute('class', cls);
+    if (color) ci.setAttribute('stroke', color);
+    return ci;
+  };
+  svg.appendChild(mk('track'));
+  const v = mk('val', passed ? 'var(--ok)' : 'var(--bad)');
+  v.setAttribute('stroke-linecap', 'round');
+  v.setAttribute('stroke-dasharray', String(c));
+  v.setAttribute('stroke-dashoffset', String(c));
+  svg.appendChild(v);
+  wrap.appendChild(svg);
+  wrap.appendChild(el('div', 'pct', percent + '%'));
+  requestAnimationFrame(() => requestAnimationFrame(() => v.setAttribute('stroke-dashoffset', String(c * (1 - percent / 100)))));
+  return wrap;
+}
+
 function renderResult() {
   const total = state.queue.length;
   const percent = Math.round(state.score / total * 100);
   const passed = percent >= PASS_PERCENT;
+  const finishedMode = state.mode;
   app.innerHTML = '';
 
+  // лучший результат по предмету
+  if ((finishedMode === 'subject' || finishedMode === 'subjectExam') && state.subject) {
+    const best = store.get(BEST_KEY, {});
+    if (!(best[state.subject] >= percent)) { best[state.subject] = percent; store.set(BEST_KEY, best); }
+  }
+
   const panel = el('div', 'panel result');
-  panel.appendChild(el('h1', null, (state.mode === 'exam' || state.mode === 'subjectExam') ? 'Результат экзамена: ' + (state.mode === 'subjectExam' ? state.subject : 'смешанный') : 'Результат: ' + modeTitle()));
-  panel.appendChild(el('div', 'percent', percent + '%'));
+  const isExam = finishedMode === 'exam' || finishedMode === 'subjectExam';
+  panel.appendChild(el('h1', null, isExam
+    ? 'Результат экзамена: ' + (finishedMode === 'subjectExam' ? state.subject : 'все предметы')
+    : 'Результат: ' + modeTitle()));
+  panel.appendChild(ring(percent, passed));
   panel.appendChild(el('div', 'verdict ' + (passed ? 'pass' : 'fail'),
     passed ? 'Сдано (порог ' + PASS_PERCENT + '%)' : 'Не сдано (порог ' + PASS_PERCENT + '%)'));
 
   const stats = el('div', 'stats');
-  const ok = el('div', 'stat ok'); ok.appendChild(el('b', null, String(state.score))); ok.appendChild(document.createTextNode('правильных'));
-  const bad = el('div', 'stat bad'); bad.appendChild(el('b', null, String(state.wrong))); bad.appendChild(document.createTextNode('неправильных'));
-  stats.appendChild(ok); stats.appendChild(bad);
+  const stat = (cls, n, label) => { const s = el('div', 'stat ' + cls); s.appendChild(el('b', null, String(n))); s.appendChild(document.createTextNode(label)); return s; };
+  stats.appendChild(stat('ok', state.score, pluralize(state.score, 'правильный', 'правильных', 'правильных')));
+  stats.appendChild(stat('bad', state.wrong, pluralize(state.wrong, 'ошибка', 'ошибки', 'ошибок')));
+  if (state.hinted) stats.appendChild(stat('', state.hinted, 'с подсказкой'));
   panel.appendChild(stats);
 
   const actions = el('div', 'actions center');
-  const again = el('button', 'btn', 'Пройти заново');
-  again.addEventListener('click', () => start(state.mode, state.subject));
-  const menu = el('button', 'btn secondary', 'В меню');
-  menu.addEventListener('click', renderMenu);
-  actions.appendChild(again); actions.appendChild(menu);
+  if (state.mistakes.length) {
+    const retry = el('button', 'btn', 'Повторить ошибки (' + state.mistakes.length + ')');
+    const queue = state.mistakes.map(m => m.source);
+    retry.addEventListener('click', () => start('retry', state.subject, { queue }));
+    actions.appendChild(retry);
+  }
+  const again = el('button', 'btn' + (state.mistakes.length ? ' secondary' : ''), 'Пройти заново');
+  const againMode = finishedMode === 'retry' ? null : finishedMode;
+  if (againMode) {
+    again.addEventListener('click', () => start(againMode, state.subject, { folder: state.folder }));
+    actions.appendChild(again);
+  }
+  const menu = el('button', 'btn secondary', state.folder ? '← К разделам' : 'В меню');
+  menu.addEventListener('click', () => backTarget()());
+  actions.appendChild(menu);
   panel.appendChild(actions);
 
-  if (state.mode === 'exam' && total < EXAM_SIZE) {
-    panel.appendChild(el('p', 'note', 'В базе пока ' + total + ' ' + pluralize(total, 'вопрос', 'вопроса', 'вопросов') + ' — экзамен собран из всех доступных.'));
+  if (finishedMode === 'exam' && total < EXAM_SIZE) {
+    panel.appendChild(el('p', 'note', 'В базе пока ' + qWord(total) + ' — экзамен собран из всех доступных.'));
   }
 
   if (state.mistakes.length) {
@@ -3837,13 +4262,24 @@ function renderResult() {
       const item = el('div', 'review-item');
       item.appendChild(richEl('p', 'q', m.question));
       item.appendChild(richEl('p', 'a', m.answer));
-      if (m.img) { const im = el('img'); im.src = m.img; im.alt = 'Правильный вариант'; item.appendChild(im); }
+      (m.imgs || []).forEach(src => { const im = el('img'); im.src = src; im.alt = 'Правильный вариант'; item.appendChild(im); });
+      if (m.note) item.appendChild(richEl('p', 'n', 'Примечание: ' + m.note));
       review.appendChild(item);
     });
     panel.appendChild(review);
+  } else {
+    panel.appendChild(el('p', 'note', 'Ни одной ошибки — отличная работа!'));
   }
   app.appendChild(panel);
+  state.mode = null; // клавиатурные сочетания больше не действуют
   window.scrollTo(0, 0);
+}
+
+/* Если тема системы меняется — перерисовать цвета карточек меню */
+if (window.matchMedia) {
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const onChange = () => { if (!state.mode && !document.documentElement.dataset.theme && document.querySelector('.hero')) renderMenu(); };
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
 }
 
 renderMenu();
